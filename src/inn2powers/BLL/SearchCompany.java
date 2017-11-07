@@ -7,7 +7,8 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
-import inn2powers.DAL.DataHandler;
+
+import inn2powers.DAL.DALManager;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 public class SearchCompany
 {
 
-    private DataHandler dh;
+    private DALManager dm;
 
     /**
      * Find the company of given name.
@@ -25,7 +26,7 @@ public class SearchCompany
      * @param name of company
      * @return company if found, else null.
      */
-    public Company FindCompany(String name)
+    public Company findCompany(String name)
     {
         return null;
     }
@@ -37,7 +38,7 @@ public class SearchCompany
      * @param c2 other company.
      * @return List of relations.
      */
-    public List<Relation> FindRelation(Company c1, Company c2)
+    public List<Relation> findRelation(Company c1, Company c2)
     {
         return null;
     }
@@ -48,7 +49,7 @@ public class SearchCompany
      * @param c Company.
      * @return A list of Relation lists which represents paths.
      */
-    public List<List<Relation>> FindRelations(Company c)
+    public List<List<Relation>> findRelations(Company c)
     {
         return null;
     }
