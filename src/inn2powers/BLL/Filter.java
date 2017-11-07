@@ -23,7 +23,7 @@ public class Filter
      * @param depth Larger than 0.
      * @return All Companies in depth.
      */
-    public List<Company> ByDepth(List<List<Relation>> r, int depth)
+    public List<Company> byDepth(List<List<Relation>> r, int depth)
     {
         return null;
     }

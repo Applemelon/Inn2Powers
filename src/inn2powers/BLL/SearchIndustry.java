@@ -26,7 +26,7 @@ public class SearchIndustry
      * @param i Industry.
      * @return All companies, somehow connected, with given industry.
      */
-    public List<Company> FindCompanies(Company c, Industry i)
+    public List<Company> findCompanies(Company c, Industry i)
     {
         return null;
     }

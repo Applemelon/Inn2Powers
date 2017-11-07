@@ -30,9 +30,9 @@ public class MainWindowModel
      * @param name of company
      * @return company if found, else null.
      */
-    public Company FindCompany(String name)
+    public Company findCompany(String name)
     {
-        return searchCompany.FindCompany(name);
+        return searchCompany.findCompany(name);
     }
 
     /**
@@ -42,9 +42,9 @@ public class MainWindowModel
      * @param c2 other company.
      * @return List of relations.
      */
-    public List<Relation> FindRelation(Company c1, Company c2)
+    public List<Relation> findRelation(Company c1, Company c2)
     {
-        return searchCompany.FindRelation(c1, c2);
+        return searchCompany.findRelation(c1, c2);
     }
 
     /**
@@ -53,9 +53,9 @@ public class MainWindowModel
      * @param c Company.
      * @return A list of Relation lists which represents paths.
      */
-    public List<List<Relation>> FindRelations(Company c)
+    public List<List<Relation>> findRelations(Company c)
     {
-        return searchCompany.FindRelations(c);
+        return searchCompany.findRelations(c);
     }
 
     /**
@@ -65,9 +65,9 @@ public class MainWindowModel
      * @param depth Larger than 0.
      * @return All Companies in depth.
      */
-    public List<Company> FindRelationsByDepth(Company c, int depth)
+    public List<Company> findRelationsByDepth(Company c, int depth)
     {
-        return filter.ByDepth(FindRelations(c), depth);
+        return filter.byDepth(findRelations(c), depth);
     }
 
     /**
@@ -77,8 +77,8 @@ public class MainWindowModel
      * @param i Industry.
      * @return All companies, somehow connected, with given industry.
      */
-    public List<Company> FindRelationsByIndustry(Company c, Industry i)
+    public List<Company> findRelationsByIndustry(Company c, Industry i)
     {
-        return searchIndustry.FindCompanies(c, i);
+        return searchIndustry.findCompanies(c, i);
     }
 }
