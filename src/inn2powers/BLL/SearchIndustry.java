@@ -7,7 +7,7 @@ package inn2powers.BLL;
 
 import be.Company;
 import inn2powers.BE.Industry;
-import inn2powers.DAL.DataHandler;
+import inn2powers.DAL.DALManager;
 import java.util.List;
 
 /**
@@ -17,7 +17,7 @@ import java.util.List;
 public class SearchIndustry
 {
 
-    private DataHandler dh;
+    private DALManager dm;
 
     /**
      * Finds companies with given industry.

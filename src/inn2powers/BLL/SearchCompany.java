@@ -7,7 +7,8 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
-import inn2powers.DAL.DataHandler;
+
+import inn2powers.DAL.DALManager;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 public class SearchCompany
 {
 
-    private DataHandler dh;
+    private DALManager dm;
 
     /**
      * Find the company of given name.
