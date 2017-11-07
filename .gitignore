@@ -81,4 +81,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Visual Paradigm
+UML/Inn2Powers.vpp.*
+UML/.Inn2Powers.*
+UML/Inn2Powers.vpp.*
+UML/.Inn2Powers.*
+
 # End of https://www.gitignore.io/api/java,macos,windows,netbeans
