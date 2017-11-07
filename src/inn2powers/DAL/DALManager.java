@@ -17,11 +17,13 @@ import java.util.List;
  *
  * @author janvanzetten
  */
-public class daltest {
+public class DALManager {
+    // Company Data Access Object
     CompanyDAO CDAO;
+    // Relation Data Access Object
     RelationDAO RDAO;
 
-    public daltest() throws IOException {
+    public DALManager() throws IOException {
         this.CDAO = new CompanyDAO();
     }
 /**

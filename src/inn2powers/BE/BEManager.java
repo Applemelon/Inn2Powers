@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inn2powers.BLL;
+package inn2powers.BE;
 
 /**
  *
  * @author janvanzetten
  */
-public class blltest {
+public class BEManager {
     
 }
