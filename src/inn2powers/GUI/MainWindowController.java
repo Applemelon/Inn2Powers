@@ -5,11 +5,16 @@
  */
 package inn2powers.GUI;
 
-import java.awt.TextField;
+
+
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
@@ -33,6 +38,8 @@ public class MainWindowController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,19 +53,40 @@ public class MainWindowController implements Initializable {
         if (comboSearchType.getSelectionModel().getSelectedIndex() == 0) {
             txtFirmaerSelected.setVisible(true);
             comboOverbrancherSelected.setVisible(false);
-            comboUnderbrancherSelected.setVisible(false);            
+            comboUnderbrancherSelected.setVisible(false);
         }
         //If "Overbrancher" is selected in comboSearchType...
         if (comboSearchType.getSelectionModel().getSelectedIndex() == 1) {
             txtFirmaerSelected.setVisible(false);
             comboOverbrancherSelected.setVisible(true);
-            comboUnderbrancherSelected.setVisible(false);            
+            comboUnderbrancherSelected.setVisible(false);
         }
         //If "Underbrancher" is selected in comboSearchType...
         if (comboSearchType.getSelectionModel().getSelectedIndex() == 2) {
             txtFirmaerSelected.setVisible(false);
             comboOverbrancherSelected.setVisible(false);
-            comboUnderbrancherSelected.setVisible(true);            
+            comboUnderbrancherSelected.setVisible(true);
         }
     }
+    
+    @FXML
+    public javafx.scene.control.TextField getTxtFirma() {
+        return txtFirma;
+    }
+
+    @FXML
+    public javafx.scene.control.TextField getTxtFirmaerSelected() {
+        return txtFirmaerSelected;
+    }
+
+    @FXML
+    public ComboBox<String> getComboOverbrancherSelected() {
+        return comboOverbrancherSelected;
+    }
+
+    @FXML
+    public ComboBox<String> getComboUnderbrancherSelected() {
+        return comboUnderbrancherSelected;
+    }
+    
 }
