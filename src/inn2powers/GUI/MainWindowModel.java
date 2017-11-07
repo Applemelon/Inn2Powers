@@ -7,11 +7,11 @@ package inn2powers.GUI;
 
 import be.Company;
 import be.Relation;
+import inn2powers.BE.Industry;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.SearchIndustry;
 import java.util.List;
-import jdk.nashorn.internal.runtime.FindProperty;
 
 /**
  *
