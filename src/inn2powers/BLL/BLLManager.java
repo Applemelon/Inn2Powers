@@ -13,17 +13,18 @@ import java.io.IOException;
  * @author janvanzetten
  */
 public class BLLManager {
+
     DALManager DALM;
-    
+
     public BLLManager() throws IOException {
         this.DALM = new DALManager();
     }
-    
+
     public String[] getBusinessRoles() {
         return DALM.getBusinessRoles();
     }
-    
-    public String[] getSupplyChainCategories (){
+
+    public String[] getSupplyChainCategories() {
         return DALM.getSupplyChainCategories();
     }
 }
