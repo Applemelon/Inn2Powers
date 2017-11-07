@@ -14,7 +14,7 @@
       <TextField fx:id="txtFirma" layoutX="48.0" layoutY="45.0" promptText="Indtast firmanavn..." />
       <Label layoutX="48.0" layoutY="27.0" text="Firma" />
       <Label layoutX="270.0" layoutY="27.0" text="Søg:" />
-      <ComboBox fx:id="comboSearchType" layoutX="270.0" layoutY="45.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboSearchType" layoutX="270.0" layoutY="45.0" onAction="#handleSearchType" prefWidth="150.0" />
       <Button layoutX="48.0" layoutY="85.0" mnemonicParsing="false" text="Filtrer" />
       <ScrollPane layoutX="48.0" layoutY="130.0" prefHeight="349.0" prefWidth="311.0">
          <content>
