@@ -88,3 +88,7 @@ UML/Inn2Powers.vpp.*
 UML/.Inn2Powers.*
 
 # End of https://www.gitignore.io/api/java,macos,windows,netbeans
+nbproject/project.properties
+*.vpp
+nbproject/project.properties
+nbproject/project.properties
