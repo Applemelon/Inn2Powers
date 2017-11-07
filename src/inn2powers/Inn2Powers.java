@@ -20,7 +20,7 @@ public class Inn2Powers extends Application {
     @Override
 
     public void start(Stage stage) throws Exception {    
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/IntroWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/MainWindow.fxml"));
 
         
         Scene scene = new Scene(root);
