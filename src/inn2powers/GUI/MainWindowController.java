@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -26,11 +27,11 @@ import javafx.scene.control.ComboBox;
 public class MainWindowController implements Initializable {
 
     @FXML
-    private javafx.scene.control.TextField txtFirma;
+    private TextField txtFirma;
     @FXML
     private ComboBox<String> comboSearchType;
     @FXML
-    private javafx.scene.control.TextField txtFirmaerSelected;
+    private TextField txtFirmaerSelected;
     @FXML
     private ComboBox<String> comboOverbrancherSelected;
     @FXML
@@ -67,26 +68,5 @@ public class MainWindowController implements Initializable {
             comboOverbrancherSelected.setVisible(false);
             comboUnderbrancherSelected.setVisible(true);
         }
-    }
-    
-    @FXML
-    public javafx.scene.control.TextField getTxtFirma() {
-        return txtFirma;
-    }
-
-    @FXML
-    public javafx.scene.control.TextField getTxtFirmaerSelected() {
-        return txtFirmaerSelected;
-    }
-
-    @FXML
-    public ComboBox<String> getComboOverbrancherSelected() {
-        return comboOverbrancherSelected;
-    }
-
-    @FXML
-    public ComboBox<String> getComboUnderbrancherSelected() {
-        return comboUnderbrancherSelected;
-    }
-    
+    }    
 }
