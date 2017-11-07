@@ -30,7 +30,7 @@ public class MainWindowModel
      * @param name of company
      * @return company if found, else null.
      */
-    public Company findCompany(String name)
+    public Company findCompany(String name) throws Exception
     {
         return searchCompany.findCompany(name);
     }
@@ -38,8 +38,8 @@ public class MainWindowModel
     /**
      * Get relation path between two companies.
      *
-     * @param c1 root company.
-     * @param c2 other company.
+     * @param c1 source company.
+     * @param c2 target company.
      * @return List of relations.
      */
     public List<Relation> findRelation(Company c1, Company c2)
