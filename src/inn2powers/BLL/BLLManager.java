@@ -9,10 +9,7 @@ import be.Company;
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  *
@@ -34,24 +31,25 @@ public class BLLManager {
     }
     
     /**
-     * returns all the companies with a given role, also cheks if it is a valid role will write to the console if not
+     * returns all the companies with a given role, also cheks if it is a valid role will write to the console and return null if not
      * @param Role the role the companies should have as a String
+     * @return a list of companies
      */
-    public void getCompanysFromBusinessRole(String Role){
+    public List<Company> getCompanysFromBusinessRole(String Role){
         for (int i = 0; i < getBusinessRoles().length; i++) {
             if (getBusinessRoles()[i].equals(Role)){
-                getListofBusiniessesFromRole(Role);
-                return;
+                return getListofBusiniessesFromRole(Role);
             }
             
         }
         System.out.println("Not a known business Role");
+        return null;
     }
 
     /**
      * returns all the companies with a given role
      * @param Role the role the companies should have as a String
-     * @return 
+     * @return a List of companies
      */
     private List<Company> getListofBusiniessesFromRole(String Role) {
         List<Company>  allCompanies = DALM.getAllCompanies();
