@@ -7,7 +7,6 @@ package inn2powers.GUI;
 
 import be.Company;
 import be.Relation;
-import inn2powers.BE.Industry;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
@@ -77,7 +76,7 @@ public class MainWindowModel
      * @param r Role.
      * @return All companies, somehow connected, with given industry.
      */
-    public List<Company> findRelationsByIndustry(Company c, String r)
+    public List<Company> findCompaniesByRole(Company c, String r)
     {
         return bm.getCompanysFromBusinessRole(r);
     }
