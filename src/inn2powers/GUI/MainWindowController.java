@@ -111,11 +111,13 @@ public class MainWindowController implements Initializable {
     @FXML
     private void handleButton() {
         if (!comboOverbrancherSelected.getSelectionModel().isEmpty()) {
-            ObservableList<String> ol = FXCollections.observableArrayList();
-            List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
-            for (Company company : companies) {
-                ol.add(company.getName());
-                listFirmaer.setItems(ol);
+            if (comboOverbrancherSelected.isVisible()) {
+                ObservableList<String> ol = FXCollections.observableArrayList();
+                List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
+                for (Company company : companies) {
+                    ol.add(company.getName());
+                    listFirmaer.setItems(ol);
+                }
             }
         }
     }
