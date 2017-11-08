@@ -123,6 +123,7 @@ public class MainWindowController implements Initializable {
                 for (Company company : companies) {
                     ol.add(company.getName());
                     accordian.getPanes().add(new TitledPane(company.getName(), new AnchorPane()));
+
                     listFirmaer.setItems(ol);
                 }
             }
