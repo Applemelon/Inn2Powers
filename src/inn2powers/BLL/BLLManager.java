@@ -94,7 +94,7 @@ public class BLLManager {
         List<Company> allCompanies = DALM.getAllCompanies();
         List<Company> categoryCompanies = new ArrayList<>();
         for (Company company : allCompanies) {
-            if (!company.getSupplyChainCategoriy().equals(Category)) {
+            if (company.getSupplyChainCategoriy().equals(Category)) {
                 categoryCompanies.add(company);
             }
         }
