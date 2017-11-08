@@ -14,17 +14,15 @@
         <Label layoutX="48.0" layoutY="27.0" text="Firma" />
         <Label layoutX="270.0" layoutY="27.0" text="Søg:" />
         <ComboBox fx:id="comboSearchType" layoutX="270.0" layoutY="45.0" onAction="#handleSearchType" prefWidth="150.0" />
-        <Button fx:id="btnFiltrer" layoutX="52.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleButton" text="Filtrer" />
-        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="438.0" layoutY="177.0" prefHeight="200.0" prefWidth="200.0">
-            <content>
-                <ScrollPane fitToWidth="true" layoutY="110.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
-                    <AnchorPane maxWidth="684.0" minWidth="280.0" prefHeight="399.0" prefWidth="684.0">
-                        <children>
-                            <Accordion fx:id="accordian" prefHeight="407.0" prefWidth="692.0" />
-                        </children>
-                    </AnchorPane>
-                </ScrollPane>
-            </content>
+        <Button fx:id="btnFiltrer" layoutX="52.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleButton" text="Søg" />
+        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="273.0" layoutY="177.0" prefHeight="200.0" prefWidth="365.0">
+         <content>
+                 <AnchorPane maxWidth="684.0" minWidth="280.0" prefHeight="399.0" prefWidth="684.0">
+                     <children>
+                         <Accordion fx:id="accordian" prefHeight="407.0" prefWidth="692.0" />
+                     </children>
+                 </AnchorPane>
+         </content>
         </ScrollPane>
         <TextField fx:id="txtFirmaerSelected" layoutX="489.0" layoutY="45.0" visible="false" />
         <ComboBox fx:id="comboUnderbrancherSelected" layoutX="488.0" layoutY="45.0" prefWidth="150.0" visible="false" />
