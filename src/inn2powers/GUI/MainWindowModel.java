@@ -11,6 +11,11 @@ import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 
 /**
  *
@@ -19,6 +24,11 @@ import java.util.List;
 public class MainWindowModel
 {
 
+    @FXML
+    private ListView listFirmaer;
+    @FXML
+    private ComboBox<String> comboOverbrancherSelected;
+    
     SearchCompany searchCompany;
     BLLManager bm;
     Filter filter;
@@ -80,4 +90,15 @@ public class MainWindowModel
     {
         return bm.getCompanysFromBusinessRole(r);
     }
+
+    
+    public ObservableList<String> createOverbrancherList() {
+        ObservableList<String> ol = FXCollections.observableArrayList();
+        List<Company> companies = bm.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
+        for (Company company : companies) {
+            ol.add(company.getName());
+        }
+        return ol;
+    }
+
 }

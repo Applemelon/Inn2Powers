@@ -57,11 +57,13 @@ public class MainWindowController implements Initializable {
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
     }
-    
+
+    MainWindowModel MWModel;
     BLLManager BLLM;
-    
+
     public MainWindowController() throws IOException {
         this.BLLM = new BLLManager();
+        this.MWModel = new MainWindowModel();
     }
 
     @FXML
@@ -105,15 +107,17 @@ public class MainWindowController implements Initializable {
 
         }
     }
-    
+
     @FXML
     private void handleButton() {
-        ObservableList<String> ol = FXCollections.observableArrayList();
-        List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
-        for (Company company : companies) {
-            ol.add(company.getName());
+        if (!comboOverbrancherSelected.getSelectionModel().isEmpty()) {
+            ObservableList<String> ol = FXCollections.observableArrayList();
+            List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
+            for (Company company : companies) {
+                ol.add(company.getName());
+                listFirmaer.setItems(ol);
+            }
         }
-        listFirmaer.setItems(ol);
     }
 
     @FXML
