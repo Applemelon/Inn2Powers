@@ -29,16 +29,26 @@ public class RelationsshipLogic {
 
         //first Layer check
         for (Relation relation : relations) {
-            if ((startCompany.equals(relation.getSource()) && targetCompany.equals(relation.getTarget())) 
-                    || (startCompany.equals(relation.getTarget()) && (targetCompany.equals(relation.getSource())))){
+            if (checkRelation(startCompany, targetCompany, relation.getSource(), relation.getTarget())) {
                 List<Relation> list = new ArrayList<>();
                 list.add(relation);
                 return list;
             }
-
         }
-
         
+        
+        
+        
+        
+        
+        
+        
+        
+        return null;
+    }
+
+    private boolean checkRelation(Company start, Company target, Company start1, Company target1) {
+        return (start.equals(start1) && target.equals(target1)) || (start.equals(target1) && target.equals(start1));
 
     }
 
