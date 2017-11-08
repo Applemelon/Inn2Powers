@@ -120,6 +120,17 @@ public class MainWindowController implements Initializable {
                 }
             }
         }
+        //under brancher
+        if (!comboUnderbrancherSelected.getSelectionModel().isEmpty()) {
+            if (comboUnderbrancherSelected.isVisible()) {
+                ObservableList<String> ol = FXCollections.observableArrayList();
+                List<Company> companies = BLLM.getCompaniesFromCategories(comboUnderbrancherSelected.getValue());
+                for (Company company : companies) {
+                    ol.add(company.getName());
+                    listFirmaer.setItems(ol);
+                }
+            }
+        }
     }
 
     @FXML
