@@ -9,6 +9,7 @@ import be.Company;
 import be.Relation;
 import inn2powers.BLL.BLLManager;
 import inn2powers.BLL.SearchCompany;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javax.management.relation.Role;
 
 /**
  * FXML Controller class
@@ -40,6 +43,8 @@ public class MainWindowController implements Initializable {
     private ComboBox<String> comboUnderbrancherSelected;
     @FXML
     private Button btnFiltrer;
+    @FXML
+    private ListView listFirmaer;
 
     /**
      * Initializes the controller class.
@@ -52,13 +57,18 @@ public class MainWindowController implements Initializable {
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
     }
+    
+    BLLManager BLLM;
+    
+    public MainWindowController() throws IOException {
+        this.BLLM = new BLLManager();
+    }
 
     @FXML
     private void handleSearchType() {
         try {/*da der er i BLLManager er brugt ioExeption, skal der her anvendes en try catch,
             ved at indsætte metoden i en try/catch fanger fejlen hvis der smides en ioexeption inde
             i BLLManger*/
-            BLLManager bm = new BLLManager();// laver et nyt BLLManeger object.
             //If "Firmaer" is selected in comboSearchType...
             if (comboSearchType.getSelectionModel().getSelectedIndex() == 0) {
                 txtFirmaerSelected.setVisible(true);
@@ -71,10 +81,10 @@ public class MainWindowController implements Initializable {
                 comboOverbrancherSelected.setVisible(true);
                 comboUnderbrancherSelected.setVisible(false);
 
-                //det er den vi fylder ind i vores combox så den kan vise en liste af string object.
+                //det er den vi fylder ind i vores combox så den viser en liste af string object.
                 ObservableList<String> ol = FXCollections.observableArrayList();
                 // fylder listen med businessRoles
-                ol.addAll(bm.getBusinessRoles());
+                ol.addAll(BLLM.getBusinessRoles());
                 //fylder listen ind i vores combobox
                 comboOverbrancherSelected.setItems(ol);
             }
@@ -84,16 +94,26 @@ public class MainWindowController implements Initializable {
                 comboOverbrancherSelected.setVisible(false);
                 comboUnderbrancherSelected.setVisible(true);
 
-                //det er den vi fylder ind i vores combox så den kan viser en liste af string object.
+                //det er den vi fylder ind i vores combox så den viser en liste af string object.
                 ObservableList<String> ol = FXCollections.observableArrayList();
                 // fylder listen med businessRoles
-                ol.addAll(bm.getSupplyChainCategories());
+                ol.addAll(BLLM.getSupplyChainCategories());
                 //fylder listen ind i vores combobox
                 comboUnderbrancherSelected.setItems(ol);
             }
         } catch (Exception ex) {
 
         }
+    }
+    
+    @FXML
+    private void handleButton() {
+        ObservableList<String> ol = FXCollections.observableArrayList();
+        List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
+        for (Company company : companies) {
+            ol.add(company.getName());
+        }
+        listFirmaer.setItems(ol);
     }
 
     @FXML
