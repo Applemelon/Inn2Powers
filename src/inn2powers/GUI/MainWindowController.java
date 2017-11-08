@@ -20,13 +20,16 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javax.management.relation.Role;
 
 /**
@@ -122,7 +125,22 @@ public class MainWindowController implements Initializable {
                 List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
                 for (Company company : companies) {
                     ol.add(company.getName());
-                    accordian.getPanes().add(new TitledPane(company.getName(), new AnchorPane()));
+                    TitledPane gridTitlePane = new TitledPane(company.getName(), new AnchorPane());
+                    GridPane grid = new GridPane();
+                    grid.setVgap(4);
+                    grid.setPadding(new Insets(5, 5, 5, 5));
+                    grid.add(new Label("Country: "), 0, 0);
+                    grid.add(new Label(company.getCountry()), 1, 0);
+                    grid.add(new Label("Address: "), 0, 1);
+                    grid.add(new Label(company.getAddress()), 1, 1);
+                    grid.add(new Label("Website: "), 0, 2);
+                    grid.add(new Label(company.getWebsite()), 1, 2);
+                    grid.add(new Label("Supply Chain Categories"), 0, 3);
+                    grid.add(new Label(company.getSupplyChainCategoriy()), 1, 3);
+                    grid.add(new Label("Business Roles"), 0, 4);
+                    grid.add(new Label(company.getBuisnessRole()), 1, 4);
+                    gridTitlePane.setContent(grid);
+                    accordian.getPanes().add(gridTitlePane);
 
                     listFirmaer.setItems(ol);
                 }
