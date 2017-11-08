@@ -10,7 +10,7 @@ import be.Relation;
 import inn2powers.BE.Industry;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
-import inn2powers.BLL.SearchIndustry;
+import inn2powers.BLL.BLLManager;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public class MainWindowModel
 {
 
     SearchCompany searchCompany;
-    SearchIndustry searchIndustry;
+    BLLManager bm;
     Filter filter;
 
     /**
@@ -74,11 +74,11 @@ public class MainWindowModel
      * Finds companies with given industry.
      *
      * @param c Company.
-     * @param i Industry.
+     * @param r Role.
      * @return All companies, somehow connected, with given industry.
      */
-    public List<Company> findRelationsByIndustry(Company c, Industry i)
+    public List<Company> findRelationsByIndustry(Company c, String r)
     {
-        return searchIndustry.findCompanies(c, i);
+        return bm.getCompanysFromBusinessRole(r);
     }
 }
