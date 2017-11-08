@@ -71,7 +71,7 @@ public class MainWindowController implements Initializable {
                 comboOverbrancherSelected.setVisible(true);
                 comboUnderbrancherSelected.setVisible(false);
 
-                //det er den vi fylder ind i vores combox så den viser en liste af string object.
+                //det er den vi fylder ind i vores combox så den kan vise en liste af string object.
                 ObservableList<String> ol = FXCollections.observableArrayList();
                 // fylder listen med businessRoles
                 ol.addAll(bm.getBusinessRoles());
@@ -84,7 +84,7 @@ public class MainWindowController implements Initializable {
                 comboOverbrancherSelected.setVisible(false);
                 comboUnderbrancherSelected.setVisible(true);
 
-                //det er den vi fylder ind i vores combox så den viser en liste af string object.
+                //det er den vi fylder ind i vores combox så den kan viser en liste af string object.
                 ObservableList<String> ol = FXCollections.observableArrayList();
                 // fylder listen med businessRoles
                 ol.addAll(bm.getSupplyChainCategories());
