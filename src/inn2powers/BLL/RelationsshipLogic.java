@@ -61,25 +61,6 @@ public class RelationsshipLogic {
                 }
             }
         }
-        
-        
-        //Layer three
-        for (int i = 0; i < LayerTwoR.size(); i++) {
-            for (Relation relation : relations) {
-                Company check = getFreeCompanyRelation(LayerTwo.get(i), relation);
-                if (check != null) {
-                    LayerTwo.add(check);
-                    LayerTwoR.add(relation);
-                    if (checkRelation(targetCompany, relation)) {
-                        List<Relation> list = new ArrayList<>();
-                        list.add(LayerOneR.get(i));
-                        list.add(relation);
-                        return list;
-                    }
-                }
-            }
-            
-        }
 
         return null;
     }
