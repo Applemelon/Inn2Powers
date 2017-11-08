@@ -70,11 +70,11 @@ public class MainWindowModel
     }
 
     /**
-     * Finds companies with given industry.
+     * Finds companies with given role.
      *
      * @param c Company.
      * @param r Role.
-     * @return All companies, somehow connected, with given industry.
+     * @return All companies with given role.
      */
     public List<Company> findCompaniesByRole(Company c, String r)
     {
