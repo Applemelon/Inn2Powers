@@ -9,6 +9,7 @@ import be.Company;
 import be.Relation;
 
 import inn2powers.DAL.DALManager;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,11 @@ public class SearchCompany
 
     private DALManager dm;
 
+    public SearchCompany() throws IOException
+    {
+        this.dm = new DALManager();
+    }
+
     /**
      * Find the company of given name.
      *
@@ -30,7 +36,6 @@ public class SearchCompany
     public Company findCompany(String name) throws Exception
     {
         List<Company> companies = dm.getAllCompanies();
-        System.out.println(companies.get(0));
         for (Company company : companies)
         {
             if (company.getName().equalsIgnoreCase(name))

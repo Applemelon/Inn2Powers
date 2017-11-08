@@ -16,6 +16,7 @@ import java.util.List;
 public class CompanyListSorter {
 
     public List<Company> alphabetical(List<Company> unsortedList) {
+        final int SORTERINGSRETNING = 1; //ret til -1 hvis den sortere i forkert rækkefølge
         List<Company> sortingList = new ArrayList<>();
         sortingList = unsortedList;
         boolean notSorted = true;
@@ -25,7 +26,7 @@ public class CompanyListSorter {
             for (int i = 1; i <= sortingList.size(); i++) {
                 Company firstElement = sortingList.get(i - 1);
                 Company secondElement = sortingList.get(i);
-                if (firstElement.getName().compareToIgnoreCase(secondElement.getName()) == 1) {
+                if (firstElement.getName().compareToIgnoreCase(secondElement.getName()) == SORTERINGSRETNING) {
                     sortingList.set(i, firstElement);
                     sortingList.set(i - 1, secondElement);
                     notSorted = true;
@@ -34,5 +35,4 @@ public class CompanyListSorter {
         }
         return sortingList;
     }
-
 }
