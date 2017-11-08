@@ -20,10 +20,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 import javax.management.relation.Role;
 
 /**
@@ -45,6 +48,8 @@ public class MainWindowController implements Initializable {
     private Button btnFiltrer;
     @FXML
     private ListView listFirmaer;
+    @FXML
+    private Accordion accordian;
 
     /**
      * Initializes the controller class.
@@ -56,6 +61,7 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
+
     }
 
     MainWindowModel MWModel;
@@ -116,6 +122,7 @@ public class MainWindowController implements Initializable {
                 List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
                 for (Company company : companies) {
                     ol.add(company.getName());
+                    accordian.getPanes().add(new TitledPane(company.getName(), new AnchorPane()));
                     listFirmaer.setItems(ol);
                 }
             }
@@ -127,28 +134,11 @@ public class MainWindowController implements Initializable {
                 List<Company> companies = BLLM.getCompaniesFromCategories(comboUnderbrancherSelected.getValue());
                 for (Company company : companies) {
                     ol.add(company.getName());
+                    accordian.getPanes().add(new TitledPane(company.getName(), new AnchorPane()));
                     listFirmaer.setItems(ol);
                 }
             }
         }
     }
 
-    @FXML
-    private void handleFiltrer() {
-//        try {
-//            SearchCompany sc = new SearchCompany();
-//            List<Relation> relations = null;
-//            Company c = sc.findCompany(txtFirmaerSelected.getText());
-//            if (comboSearchType.getSelectionModel().getSelectedIndex() == 0) {
-////                companies = new ArrayList<Company>();
-////                companies.add(c);
-//            } else if (comboSearchType.getSelectionModel().getSelectedIndex() == 1) {
-//                //relations = sc.findRelations(c);
-//            } else if (comboSearchType.getSelectionModel().getSelectedIndex() == 2) {
-//
-//            }
-//        } catch (Exception ex) {
-//
-//        }
-    }
 }
