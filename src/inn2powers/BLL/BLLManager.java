@@ -84,7 +84,7 @@ public class BLLManager {
         return null;
     }
 
-    /**
+    /*
      * Return all companies with a given Supply Chain Categori
      *
      * @param Category
