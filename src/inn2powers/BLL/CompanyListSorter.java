@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class CompanyListSorter {
 
-    
-    
     public List<Company> alphabetical(List<Company> unsortedList) {
         final int SORTERINGSRETNING = 1; //ret til -1 hvis den sortere i forkert rækkefølge
         List<Company> sortingList = new ArrayList<>();
