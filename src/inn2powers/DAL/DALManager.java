@@ -48,7 +48,7 @@ public class DALManager {
      * @return String array with the diffrent roles
      */
     public String[] getBusinessRoles(){
-        return CDAO.getCompanyBuisnessRoles();
+        return CDAO.getCompanyBusinessRoles();
     }
     /**
      * get all the supply chain catagories (a lot)
