@@ -161,7 +161,7 @@ public class MainWindowController implements Initializable {
                     listFirmaer.setItems(ol);
                 }
             }
-        }
+        }        
     }
     
     @FXML

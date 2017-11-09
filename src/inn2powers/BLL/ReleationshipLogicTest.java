@@ -7,7 +7,6 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
