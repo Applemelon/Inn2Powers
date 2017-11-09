@@ -20,17 +20,33 @@ import java.util.List;
 public class ReleationshipLogicTest {
 
     List<List<List<Relation>>> paths;
+    List<Company> LastCompanys;
     private DALManager dm;
 
     public ReleationshipLogicTest() throws IOException {
         paths = new ArrayList<>();
         dm = new DALManager();
+        LastCompanys = new ArrayList<>();
+        
 
     }
 
     public List<Relation> findRelationTo(Company startCompany, Company targetCompany) {
         List<Relation> relations = dm.getAllRelations();
-
+        
+       LastCompanys.add(startCompany);
+        for (int i = 0; i <= paths.size(); i++) {
+            for (int j = 0; j <= paths.get(i).size(); j++) {
+                addLayer(LastCompanys.get(j), relations, paths.get(i).get(j));
+                
+            }
+            
+        }
+        
+        
+        
+        
+        
         
         return null;
     }
@@ -52,20 +68,23 @@ public class ReleationshipLogicTest {
     private void addLayer(Company company, List<Relation> relations, List<Relation> pathToCompany) {
         int layer = pathToCompany.size();
         List<List<Relation>> oportunities = new ArrayList<>();
-        
+        List<Relation> relationsToCompany = new ArrayList<>();
 
         for (Relation relation : relations) {
             if (checkRelation(company, relation)) {
+                relationsToCompany.add(relation);
                 List<Relation> path = new ArrayList<>();
                 path.addAll(pathToCompany);
                 path.add(relation);
                 oportunities.add(path);
             }
         }
-        
+        if (paths.size() <= layer) {
+            paths.add(new ArrayList<>());
+        }
+
         paths.get(layer).addAll(oportunities);
-        
-        
+
     }
 
 }
