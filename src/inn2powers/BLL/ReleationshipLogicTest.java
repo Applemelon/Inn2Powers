@@ -32,7 +32,7 @@ public class ReleationshipLogicTest {
         List<Relation> relations = dm.getAllRelations();
 
         
-
+        return null;
     }
 
     private boolean checkRelation(Company company, Relation relation) {
