@@ -6,6 +6,7 @@
 package inn2powers.BLL;
 
 import be.Company;
+import be.Relation;
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,5 +100,10 @@ public class BLLManager {
             }
         }
         return categoryCompanies;
+    }
+    
+    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) throws IOException {
+        ReleationshipLogicTest RLT = new ReleationshipLogicTest();
+        return RLT.findRelationTo(startCompany, targetCompany);
     }
 }

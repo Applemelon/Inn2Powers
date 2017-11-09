@@ -26,28 +26,39 @@ public class ReleationshipLogicTest {
     public ReleationshipLogicTest() throws IOException {
         paths = new ArrayList<>();
         dm = new DALManager();
-        LastCompanys = new ArrayList<>();
-        
 
     }
 
     public List<Relation> findRelationTo(Company startCompany, Company targetCompany) {
         List<Relation> relations = dm.getAllRelations();
-        
-       LastCompanys.add(startCompany);
-        for (int i = 0; i <= paths.size(); i++) {
-            for (int j = 0; j <= paths.get(i).size(); j++) {
-                addLayer(LastCompanys.get(j), relations, paths.get(i).get(j));
-                
+
+        List<Company> startList = new ArrayList<>();
+
+        addLayer(startCompany, relations, new ArrayList<>());
+
+        for (int i = 0; i < paths.get(0).size(); i++) {
+            List<Relation> test = paths.get(0).get(i);
+            if (getLastCompany(test).equals(targetCompany)) {
+                return test;
             }
-            
+
+        }
+
+        for (int i = 1; i <= paths.size(); i++) {
+            for (int j = 0; j <= paths.get(i).size(); j++) {
+                
+                List<Relation> test = paths.get(i).get(j);
+                if (getLastCompany(test).equals(targetCompany)) {
+                    return test;
+                }
+
+                addLayer(getLastCompany(paths.get(i).get(j)), relations, paths.get(i).get(j));
+
+            }
+
         }
         
-        
-        
-        
-        
-        
+
         return null;
     }
 
@@ -68,11 +79,10 @@ public class ReleationshipLogicTest {
     private void addLayer(Company company, List<Relation> relations, List<Relation> pathToCompany) {
         int layer = pathToCompany.size();
         List<List<Relation>> oportunities = new ArrayList<>();
-        List<Relation> relationsToCompany = new ArrayList<>();
 
         for (Relation relation : relations) {
             if (checkRelation(company, relation)) {
-                relationsToCompany.add(relation);
+
                 List<Relation> path = new ArrayList<>();
                 path.addAll(pathToCompany);
                 path.add(relation);
@@ -85,6 +95,17 @@ public class ReleationshipLogicTest {
 
         paths.get(layer).addAll(oportunities);
 
+    }
+
+    private Company getLastCompany(List<Relation> list) {
+        Relation last = list.get(list.size() - 1);
+        Relation secondlast = list.get(list.size() - 2);
+
+        if (checkRelation(last.getTarget(), secondlast)) {
+            return last.getSource();
+        } else {
+            return last.getTarget();
+        }
     }
 
 }
