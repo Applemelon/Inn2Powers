@@ -60,7 +60,7 @@ public class DALManager
      */
     public String[] getBusinessRoles()
     {
-        return CDAO.getCompanyBusinessRoles();
+        return CDAO.getCompanyBuisnessRoles();
     }
 
     /**
