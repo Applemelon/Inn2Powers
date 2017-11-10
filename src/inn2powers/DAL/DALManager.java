@@ -58,9 +58,14 @@ public class DALManager
      *
      * @return String array with the diffrent roles
      */
+<<<<<<< HEAD
     public String[] getBusinessRoles()
     {
         return CDAO.getCompanyBusinessRoles();
+=======
+    public String[] getBusinessRoles(){
+        return CDAO.getCompanyBuisnessRoles();
+>>>>>>> 1ba5a74996b4def7920e293878b5692c682eb6e3
     }
 
     /**
