@@ -54,23 +54,25 @@ public class SearchCompany
      * @param c2 target company.
      * @return List of relations.
      */
-    public List<Relation> findRelation(Company c1, Company c2)
+    public List<Relation> findRelation(Company c1, Company c2) throws Exception
     {
-        List<Relation> relations = dm.getAllRelations();
-        List<Relation> results = new ArrayList<>();
+        List<List<Relation>> listOfRelations = findRelations(c1);
 
-        for (Relation relation : relations)
+        for (List<Relation> relations : listOfRelations)
         {
-            if (relation.getSource() == c1)
+            if (!relations.isEmpty())
             {
-                if (relation.getTarget() == c2)
+                if (relations.get(0).getSource().getId() == c1.getId())
                 {
-                    results.add(relation);
+                    if (relations.get(relations.size() - 1).getTarget().getId() == c2.getId())
+                    {
+                        return relations;
+                    }
                 }
             }
         }
 
-        return results;
+        throw new Exception("Relation between " + c1.getName() + " and " + c2.getName() + " was not found!");
     }
 
     /**
