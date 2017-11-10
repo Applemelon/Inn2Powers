@@ -83,12 +83,92 @@ public class SearchCompany
     {
         List<Relation> relations = dm.getAllRelations();
         List<List<Relation>> results = new ArrayList<>();
+        List<Relation> tmp = new ArrayList();
+        List<Relation> found = new ArrayList();
 
-        for (Relation relation : relations)
+        System.out.println("Start " + c.getId() + " Search.");
+        results.addAll(findRelationsRecursion(c, tmp, found, relations, -1));
+
+        return results;
+    }
+
+    /**
+     * Find all relation paths for a company.
+     *
+     * @param c Company.
+     * @param depth depth of search. If -1 the search is unlimited.
+     * @return A list of Relation lists which represents paths.
+     */
+    public List<List<Relation>> findRelationsInDepth(Company c, int depth)
+    {
+        List<Relation> relations = dm.getAllRelations();
+        List<List<Relation>> results = new ArrayList<>();
+        List<Relation> tmp = new ArrayList();
+        List<Relation> found = new ArrayList();
+
+        System.out.println("Start " + c.getId() + " Search with " + depth + " in depth.");
+        results.addAll(findRelationsRecursion(c, tmp, found, relations, depth));
+
+        return results;
+    }
+
+    /**
+     * Recursive method which iterate through all relations and find all
+     * possible combinations.
+     *
+     * @param c Company to use as source.
+     * @param tmpResults List used to store temporary result.
+     * @param foundRelations List used to store found relations.
+     * @param allRelations List of all relations.
+     * @param depth depth of search. If -1 the search is unlimited.
+     * @return List of a List of relation. Each list of relations is a path.
+     */
+    private List<List<Relation>> findRelationsRecursion(Company c, List<Relation> tmpResults, List<Relation> foundRelations, List<Relation> allRelations, int depth)
+    {
+        List<List<Relation>> results = new ArrayList<>();
+
+        // Iterate through all relations.
+        for (Relation relation : allRelations)
         {
-            if (relation.getSource() == c)
+
+            if (depth == 0)
             {
-                results.addAll(findRelations(relation.getTarget()));
+                break;
+            }
+            // Only runs if the source of the relation is the same as the company given.
+            if (relation.getSource().getId() == c.getId())
+            {
+                // Checks if the relation is already found.
+                boolean isFound = false;
+                for (Relation foundResult : foundRelations)
+                {
+                    if (foundResult.getSource().getId() == relation.getTarget().getId())
+                    {
+                        isFound = true;
+                    }
+                }
+
+                // If the relation to the company have not been used.
+                if (!isFound)
+                {
+                    // Make new array with the same values of temporary result.
+                    List<Relation> result = new ArrayList<>();
+                    result.addAll(tmpResults);
+
+                    // Add new relation.
+                    result.add(relation);
+
+                    // Add new relation to found relations.
+                    foundRelations.add(relation);
+
+                    // Add result to results.
+                    results.add(result);
+
+                    int newDepth = depth != -1 ? depth - 1 : depth;
+
+                    // Run recursive method with new company and temporary result.
+                    results.addAll(findRelationsRecursion(relation.getTarget(), result, foundRelations, allRelations, newDepth));
+                }
             }
         }
 
