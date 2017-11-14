@@ -38,7 +38,8 @@ public class CompanyReader {
         while (scanner.hasNext()) {
             String lineInput = scanner.nextLine();
             String[] dataInput = lineInput.split(",");
-            Company company = new Company(Integer.parseInt(dataInput[0]), dataInput[1], dataInput[2], dataInput[3], dataInput[4], dataInput[5], dataInput[6], Double.parseDouble(dataInput[7]), Double.parseDouble(dataInput[8]), Integer.parseInt(dataInput[9]));
+            Company company = new Company(Integer.parseInt(dataInput[0]), dataInput[1], dataInput[2], dataInput[3], dataInput[4], "no supplyChainCategoriy error", "no buisnessRole Error", Double.parseDouble(dataInput[5]), Double.parseDouble(dataInput[6]), Integer.parseInt(dataInput[7]));
+       
             returnList.add(company);
         }
         
