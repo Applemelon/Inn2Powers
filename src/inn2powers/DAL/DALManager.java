@@ -33,8 +33,8 @@ public class DALManager
         this.CDAO = new CompanyDAO();
         this.RDAO = new RelationDAO();
         CReader = new CompanyReader();
-        //allCompanies = CReader.getAllCompanies();
-        allCompanies = CDAO.getAllCompanies();
+        allCompanies = CReader.getAllCompanies();
+        //allCompanies = CDAO.getAllCompanies();
     }
 
     /**
