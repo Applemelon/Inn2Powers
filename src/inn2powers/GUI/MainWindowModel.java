@@ -28,7 +28,7 @@ public class MainWindowModel
     private ListView listFirmaer;
     @FXML
     private ComboBox<String> comboOverbrancherSelected;
-    
+
     SearchCompany searchCompany;
     BLLManager bm;
     Filter filter;
@@ -51,7 +51,7 @@ public class MainWindowModel
      * @param c2 target company.
      * @return List of relations.
      */
-    public List<Relation> findRelation(Company c1, Company c2)
+    public List<Relation> findRelation(Company c1, Company c2) throws Exception
     {
         return searchCompany.findRelation(c1, c2);
     }
@@ -91,11 +91,12 @@ public class MainWindowModel
         return bm.getCompanysFromBusinessRole(r);
     }
 
-    
-    public ObservableList<String> createOverbrancherList() {
+    public ObservableList<String> createOverbrancherList()
+    {
         ObservableList<String> ol = FXCollections.observableArrayList();
         List<Company> companies = bm.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
-        for (Company company : companies) {
+        for (Company company : companies)
+        {
             ol.add(company.getName());
         }
         return ol;
