@@ -24,11 +24,17 @@ public class DALManager
     CompanyDAO CDAO;
     // Relation Data Access Object
     RelationDAO RDAO;
+    CompanyReader CReader;
+    
+    List<Company> allCompanies;
 
     public DALManager() throws IOException
     {
         this.CDAO = new CompanyDAO();
         this.RDAO = new RelationDAO();
+        CReader = new CompanyReader();
+        allCompanies = CReader.getAllCompanies();
+        //allCompanies = CDAO.getAllCompanies();
     }
 
     /**
@@ -38,7 +44,7 @@ public class DALManager
      */
     public List<Company> getAllCompanies()
     {
-        return CDAO.getAllCompanies();
+        return allCompanies;
     }
 
     /**
