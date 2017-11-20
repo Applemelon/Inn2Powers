@@ -7,6 +7,7 @@ package inn2powers.DAL;
 
 import be.Company;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,16 +16,20 @@ import java.util.List;
  */
 public class AddALLCompaniesToDatabase {
 
-    public AddALLCompaniesToDatabase() throws IOException {
+    public AddALLCompaniesToDatabase() throws IOException, SQLException {
         DALManager dal = new DALManager();
         List<Company> companies = dal.getAllCompanies();
         addCompanies(companies);
     }
 
-    private void addCompanies(List<Company> companies) {
+    private void addCompanies(List<Company> companies) throws IOException, SQLException {
         DatabaseAcces DA = new DatabaseAcces();
-        for (Company company : companies) {
-            DA.addCompany(company);
+        for (int i = 1; i< companies.size(); i++) {
+            
+            Company company = companies.get(i);
+            
+            
+            DA.addCompany(company.getId(),company.getName(), company.getAddress(), company.getCountry(), company.getWebsite(), company.getSupplyChainCategoriy(), company.getBuisnessRole(), company.getLat(), company.getLng(), company.getIsSME());
         }
     }
     

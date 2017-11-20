@@ -94,16 +94,32 @@ public class DALManager
         return RDAO.getAllRelations();
     }
     
-    public void addCompany(String name, String address, String country, String website, String supplyChainCat, String businessRole, double lat, double lng, int isSME){
+    /**
+     * adds a company
+     * @param name
+     * @param address 
+     * @param country
+     * @param website
+     * @param supplyChainCat
+     * @param businessRole
+     * @param lat
+     * @param lng
+     * @param isSME
+     * @return returns the made company with the auto generated ID
+     */
+    
+    public Company addCompany(int ID,String name, String address, String country, String website, String supplyChainCat, String businessRole, double lat, double lng, int isSME){
         try {
-            DBACS.addCompany(name, address, country, website, supplyChainCat, businessRole, lat, lng, isSME);
+            return DBACS.addCompany(ID,name, address, country, website, supplyChainCat, businessRole, lat, lng, isSME); //ADD NEW DAL EXEPTION
         } catch (SQLException ex) {
-            //ADD NEW DAL EXEPTION
+            //ADD Exeption
         }
+        return null;
     }
     
-    public void addRelation(Relation relation){
+    public Relation addRelation(int sourceCompanyID, int targetCompanyID,String type,  String Strength){
         //TODO add implementation
+        return null;
     }
     
     

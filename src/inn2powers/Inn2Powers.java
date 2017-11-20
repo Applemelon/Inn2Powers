@@ -5,6 +5,11 @@
  */
 package inn2powers;
 
+import inn2powers.DAL.AddALLCompaniesToDatabase;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +37,7 @@ public class Inn2Powers extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch(args);
     }
     
