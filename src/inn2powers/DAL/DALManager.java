@@ -88,4 +88,14 @@ public class DALManager
     {
         return RDAO.getAllRelations();
     }
+    
+    public void addCompany(Company company){
+        //TODO add implementation
+    }
+    
+    public void addRelation(Relation relation){
+        //TODO add implementation
+    }
+    
+    
 }
