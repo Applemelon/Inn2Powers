@@ -11,7 +11,10 @@ import bll.Inn2PowerException;
 import dal.CompanyDAO;
 import dal.RelationDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +28,7 @@ public class DALManager
     // Relation Data Access Object
     RelationDAO RDAO;
     CompanyReader CReader;
+    DatabaseAcces DBACS;
     
     List<Company> allCompanies;
 
@@ -33,6 +37,7 @@ public class DALManager
         this.CDAO = new CompanyDAO();
         this.RDAO = new RelationDAO();
         CReader = new CompanyReader();
+        DBACS = new DatabaseAcces();
         //allCompanies = CReader.getAllCompanies();
         allCompanies = CDAO.getAllCompanies();
     }
@@ -89,8 +94,12 @@ public class DALManager
         return RDAO.getAllRelations();
     }
     
-    public void addCompany(Company company){
-        //TODO add implementation
+    public void addCompany(String name, String address, String country, String website, String supplyChainCat, String businessRole, double lat, double lng, int isSME){
+        try {
+            DBACS.addCompany(name, address, country, website, supplyChainCat, businessRole, lat, lng, isSME);
+        } catch (SQLException ex) {
+            //ADD NEW DAL EXEPTION
+        }
     }
     
     public void addRelation(Relation relation){
