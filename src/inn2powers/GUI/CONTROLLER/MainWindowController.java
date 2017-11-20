@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inn2powers.GUI;
+package inn2powers.GUI.CONTROLLER;
 
 import be.Company;
 import be.Relation;
 import inn2powers.BLL.BLLManager;
 import inn2powers.BLL.SearchCompany;
+import inn2powers.GUI.MODEL.MainWindowModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
