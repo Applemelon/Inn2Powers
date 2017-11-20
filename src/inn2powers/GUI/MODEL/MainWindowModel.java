@@ -10,12 +10,10 @@ import be.Relation;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 
 /**
  *
@@ -24,14 +22,93 @@ import javafx.scene.control.ListView;
 public class MainWindowModel
 {
 
-    @FXML
-    private ListView listFirmaer;
-    @FXML
-    private ComboBox<String> comboOverbrancherSelected;
-
     SearchCompany searchCompany;
     BLLManager bm;
     Filter filter;
+
+    List<Company> companies;
+
+    ObservableList<String> obsProposals;
+    ObservableList<String> obsBusinessRoles;
+    ObservableList<String> obsSupplyChainCategories;
+
+    /**
+     * Constructor initiates variables.
+     */
+    public MainWindowModel()
+    {
+        companies = new ArrayList<>();
+
+        obsProposals = FXCollections.observableArrayList();
+
+        obsBusinessRoles = FXCollections.observableArrayList();
+        obsBusinessRoles.addAll(bm.getBusinessRoles());
+
+        obsSupplyChainCategories = FXCollections.observableArrayList();
+        obsSupplyChainCategories.addAll(bm.getSupplyChainCategories());
+    }
+
+    /**
+     * Gets current list of companies.
+     *
+     * @return list of Company objects.
+     */
+    public List<Company> getCompanies()
+    {
+        return companies;
+    }
+
+    /**
+     * Update companies list by Business Roles.
+     *
+     * @param role wanted business role.
+     */
+    public void updateForBusinessRoles(String role)
+    {
+        companies.clear();
+        companies.addAll(bm.getCompanysFromBusinessRole(role));
+    }
+
+    /**
+     * Update companies list by Supply Chain Category.
+     *
+     * @param category wanted category.
+     */
+    public void updateForSupplyChainCategories(String category)
+    {
+        companies.clear();
+        companies.addAll(bm.getCompaniesFromCategories(category));
+    }
+
+    /**
+     * Gets an ObservableList of Proposals.
+     *
+     * @return ObservableList of String.
+     */
+    public ObservableList<String> getObsProposals()
+    {
+        return obsProposals;
+    }
+
+    /**
+     * Gets an ObservableList of Business Roles.
+     *
+     * @return ObservableList of String.
+     */
+    public ObservableList<String> getObsBusinessRoles()
+    {
+        return obsBusinessRoles;
+    }
+
+    /**
+     * Gets an ObservableList of Supply Chain Categories.
+     *
+     * @return ObservableList of String.
+     */
+    public ObservableList<String> getObsSupplyChainCategories()
+    {
+        return obsSupplyChainCategories;
+    }
 
     /**
      * Find the company of given name.
@@ -90,16 +167,4 @@ public class MainWindowModel
     {
         return bm.getCompanysFromBusinessRole(r);
     }
-
-    public ObservableList<String> createOverbrancherList()
-    {
-        ObservableList<String> ol = FXCollections.observableArrayList();
-        List<Company> companies = bm.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
-        for (Company company : companies)
-        {
-            ol.add(company.getName());
-        }
-        return ol;
-    }
-
 }

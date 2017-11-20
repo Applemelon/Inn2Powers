@@ -6,43 +6,37 @@
 package inn2powers.GUI.CONTROLLER;
 
 import be.Company;
-import be.Relation;
 import inn2powers.BLL.BLLManager;
-import inn2powers.BLL.SearchCompany;
 import inn2powers.GUI.MODEL.MainWindowModel;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javax.management.relation.Role;
 
 /**
  * FXML Controller class
  *
  * @author Alex
  */
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable
+{
 
+    @FXML
+    private ComboBox<String> txtSearch;
     @FXML
     private ComboBox<String> comboSearchType;
     @FXML
@@ -52,149 +46,165 @@ public class MainWindowController implements Initializable {
     @FXML
     private ComboBox<String> comboUnderbrancherSelected;
     @FXML
-    private Button btnFiltrer;
-    @FXML
-    private ListView listFirmaer;
-    @FXML
-    private Accordion accordian;
+    private Accordion accordion;
+
+    MainWindowModel MWModel;
+    BLLManager BLLM;
 
     /**
-     * Initializes the controller class.
+     * Constructor which initiates variables.
+     *
+     * @throws IOException
+     */
+    public MainWindowController() throws IOException
+    {
+        this.BLLM = new BLLManager();
+        this.MWModel = new MainWindowModel();
+    }
+
+    /**
+     * Initialise the controller class.
      *
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        txtSearch.setItems(MWModel.getObsProposals());
+
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
 
+        comboOverbrancherSelected.setItems(MWModel.getObsBusinessRoles());
+
+        comboUnderbrancherSelected.setItems(MWModel.getObsSupplyChainCategories());
     }
 
-    MainWindowModel MWModel;
-    BLLManager BLLM;
-
-    public MainWindowController() throws IOException {
-        this.BLLM = new BLLManager();
-        this.MWModel = new MainWindowModel();
-    }
-
+    /**
+     * Gets proposals based on user input and add to combobox.
+     *
+     * @param event
+     */
     @FXML
-    private void handleSearchType() {
-        try {/*da der er i BLLManager er brugt ioExeption, skal der her anvendes en try catch,
-            ved at indsætte metoden i en try/catch fanger fejlen hvis der smides en ioexeption inde
-            i BLLManger*/
+    private void handleProposal(KeyEvent event)
+    {
+        txtSearch.getItems().clear();
+
+        String str = txtSearch.getPromptText();
+
+        if (str.length() == 1)
+        {
+            List<Company> companies = MWModel.getCompanies();
+            for (Company company : companies)
+            {
+                if (company.getName().charAt(0) == str.charAt(0))
+                {
+                    txtSearch.getItems().add(company.getName());
+                }
+            }
+        }
+        else if (!str.isEmpty())
+        {
+            List<Company> companies = MWModel.getCompanies();
+            for (Company company : companies)
+            {
+                if (company.getName().contains(str))
+                {
+                    txtSearch.getItems().add(company.getName());
+                }
+            }
+        }
+    }
+
+    /**
+     * Change to wanted input by combobox selection.
+     */
+    @FXML
+    private void handleSearchType()
+    {
+        switch (comboSearchType.getSelectionModel().getSelectedIndex())
+        {
             //If "Firmaer" is selected in comboSearchType...
-            if (comboSearchType.getSelectionModel().getSelectedIndex() == 0) {
+            case 0:
+            {
                 txtFirmaerSelected.setVisible(true);
                 comboOverbrancherSelected.setVisible(false);
                 comboUnderbrancherSelected.setVisible(false);
+                break;
             }
             //If "Overbrancher" is selected in comboSearchType...
-            if (comboSearchType.getSelectionModel().getSelectedIndex() == 1) {
+            case 1:
+            {
                 txtFirmaerSelected.setVisible(false);
                 comboOverbrancherSelected.setVisible(true);
                 comboUnderbrancherSelected.setVisible(false);
-
-                //det er den vi fylder ind i vores combox så den viser en liste af string object.
-                ObservableList<String> ol = FXCollections.observableArrayList();
-                // fylder listen med businessRoles
-                ol.addAll(BLLM.getBusinessRoles());
-                //fylder listen ind i vores combobox
-                comboOverbrancherSelected.setItems(ol);
+                break;
             }
             //If "Underbrancher" is selected in comboSearchType...
-            if (comboSearchType.getSelectionModel().getSelectedIndex() == 2) {
+            case 2:
+            {
                 txtFirmaerSelected.setVisible(false);
                 comboOverbrancherSelected.setVisible(false);
                 comboUnderbrancherSelected.setVisible(true);
-
-                //det er den vi fylder ind i vores combox så den viser en liste af string object.
-                ObservableList<String> ol = FXCollections.observableArrayList();
-                // fylder listen med businessRoles
-                ol.addAll(BLLM.getSupplyChainCategories());
-                //fylder listen ind i vores combobox
-                comboUnderbrancherSelected.setItems(ol);
+                break;
             }
-        } catch (Exception ex) {
-
+            default:
+                break;
         }
     }
 
+    /**
+     * Handles search
+     */
     @FXML
-    private void handleButton() {
-        if (!comboOverbrancherSelected.getSelectionModel().isEmpty()) {
-            if (comboOverbrancherSelected.isVisible()) {
-                ObservableList<String> ol = FXCollections.observableArrayList();
-                List<Company> companies = BLLM.getCompanysFromBusinessRole(comboOverbrancherSelected.getValue());
-                for (Company company : companies) {
-                    ol.add(company.getName());
-                    TitledPane gridTitlePane = new TitledPane(company.getName(), new AnchorPane());
-                    GridPane grid = new GridPane();
-                    grid.setVgap(4);
-                    grid.setPadding(new Insets(5, 5, 5, 5));
-                    grid.add(new Label("Country:  "), 0, 0);
-                    grid.add(new Label(company.getCountry()), 1, 0);
-                    grid.add(new Label("Address:  "), 0, 1);
-                    grid.add(new Label(company.getAddress()), 1, 1);
-                    grid.add(new Label("Website:  "), 0, 2);
-                    grid.add(new Label(company.getWebsite()), 1, 2);
-                    grid.add(new Label("Supply Chain Categories:  "), 0, 3);
-                    grid.add(new Label(company.getSupplyChainCategoriy()), 1, 3);
-                    grid.add(new Label("Business Roles:  "), 0, 4);
-                    grid.add(new Label(company.getBuisnessRole()), 1, 4);
-
-                    gridTitlePane.setContent(grid);
-                    accordian.getPanes().add(gridTitlePane);
-
-                    listFirmaer.setItems(ol);
-                }
+    private void handleSearch()
+    {
+        if (!comboOverbrancherSelected.getSelectionModel().isEmpty())
+        {
+            if (comboOverbrancherSelected.isVisible())
+            {
+                MWModel.updateForBusinessRoles(comboOverbrancherSelected.getValue());
+                fillAccordion(MWModel.getCompanies());
             }
         }
-        //under brancher
-        if (!comboUnderbrancherSelected.getSelectionModel().isEmpty()) {
-            if (comboUnderbrancherSelected.isVisible()) {
-                ObservableList<String> ol = FXCollections.observableArrayList();
-                List<Company> companies = BLLM.getCompaniesFromCategories(comboUnderbrancherSelected.getValue());
-                for (Company company : companies) {
-                    ol.add(company.getName());
-                    TitledPane gridTitlePane = new TitledPane(company.getName(), new AnchorPane());
-                    GridPane grid = new GridPane();
-                    grid.setVgap(4);
-                    grid.setPadding(new Insets(5, 5, 5, 5));
-                    grid.add(new Label("Country:  "), 0, 0);
-                    grid.add(new Label(company.getCountry()), 1, 0);
-                    grid.add(new Label("Address:  "), 0, 1);
-                    grid.add(new Label(company.getAddress()), 1, 1);
-                    grid.add(new Label("Website:  "), 0, 2);
-                    grid.add(new Label(company.getWebsite()), 1, 2);
-                    grid.add(new Label("Supply Chain Categories:  "), 0, 3);
-                    grid.add(new Label(company.getSupplyChainCategoriy()), 1, 3);
-                    grid.add(new Label("Business Roles:  "), 0, 4);
-                    grid.add(new Label(company.getBuisnessRole()), 1, 4);
-
-                    gridTitlePane.setContent(grid);
-
-                    accordian.getPanes().add(gridTitlePane);
-                    listFirmaer.setItems(ol);
-                }
+        else if (!comboUnderbrancherSelected.getSelectionModel().isEmpty())
+        {
+            if (comboUnderbrancherSelected.isVisible())
+            {
+                MWModel.updateForSupplyChainCategories(comboUnderbrancherSelected.getValue());
+                fillAccordion(MWModel.getCompanies());
             }
         }
     }
 
-    @FXML
-    public void searchBar() {
-        ObservableList<String> ol = FXCollections.observableArrayList();
-        FilteredList<String> filteredList;
-        filteredList = new FilteredList<>(ol);
-        listFirmaer.setItems(filteredList);
+    /**
+     * Fill out accordion with companies and information.
+     *
+     * @param companies to fill.
+     */
+    private void fillAccordion(List<Company> companies)
+    {
+        accordion.getPanes().clear();
+        for (Company company : companies)
+        {
+            TitledPane gridTitlePane = new TitledPane(company.getName(), new AnchorPane());
+            GridPane grid = new GridPane();
+            grid.setVgap(4);
+            grid.setPadding(new Insets(5, 5, 5, 5));
+            grid.add(new Label("Country:  "), 0, 0);
+            grid.add(new Label(company.getCountry()), 1, 0);
+            grid.add(new Label("Address:  "), 0, 1);
+            grid.add(new Label(company.getAddress()), 1, 1);
+            grid.add(new Label("Website:  "), 0, 2);
+            grid.add(new Label(company.getWebsite()), 1, 2);
+            grid.add(new Label("Supply Chain Categories:  "), 0, 3);
+            grid.add(new Label(company.getSupplyChainCategoriy()), 1, 3);
+            grid.add(new Label("Business Roles:  "), 0, 4);
+            grid.add(new Label(company.getBuisnessRole()), 1, 4);
 
-        filteredList.setPredicate(new Predicate<String>() {
-            @Override
-            public boolean test(String t) {
-                return false;
-            }
-        });
+            gridTitlePane.setContent(grid);
+            accordion.getPanes().add(gridTitlePane);
+        }
     }
-
 }
