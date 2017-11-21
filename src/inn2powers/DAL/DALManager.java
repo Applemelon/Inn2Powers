@@ -115,25 +115,28 @@ public class DALManager
      * @return returns the made company with the auto generated ID
      */
     
-    public Company addCompany(int ID,String name, String address, String country, String website, String supplyChainCat, String businessRole, double lat, double lng, int isSME){
+    public Company addCompany(int ID,String name, String address, String country, String website, String supplyChainCat, String businessRole, double lat, double lng, int isSME) throws DALException{
         try {
             return DBACS.addCompany(ID,name, address, country, website, supplyChainCat, businessRole, lat, lng, isSME); //ADD NEW DAL EXEPTION
         } catch (SQLException ex) {
-            //ADD Exeption
+            throw new DALException(ex.getMessage());
         }
-        return null;
+        
     }
     /**
      * add a relation
-     * @param sourceCompanyID
-     * @param targetCompanyID
+     * @param sourceCompany
+     * @param targetCompany
      * @param type
      * @param Strength
      * @return the relation as an object
      */
-    public Relation addRelation(int sourceCompanyID, int targetCompanyID,String type,  String Strength){
-        //TODO add implementation
-        return null;
+    public Relation addRelation(Company sourceCompany, Company targetCompany,String type,  String Strength) throws DALException{
+        try {
+            return DBACS.addRelation(sourceCompany, targetCompany, type, Strength);
+        } catch (SQLException ex) {
+            throw new DALException(ex.getMessage());
+        }
     }
     
     /**
@@ -141,8 +144,14 @@ public class DALManager
      * @param id the id of the company
      * @return true if succesful remove else false
      */
-    public boolean removeCompany(int id){
-        return false;
+    public boolean removeCompany(int id) throws DALException{
+        
+        try {
+            return DBACS.removeCompanybyID(id);
+        } catch (SQLException ex) {
+            throw new DALException(ex.getMessage());
+        }
+        
     }
     
     /**
@@ -150,8 +159,12 @@ public class DALManager
      * @param id
      * @return Company object
      */
-    public Company getCompanyByID(int id){
-        return null;
+    public Company getCompanyByID(int id) throws DALException{
+        try {
+            return DBACS.getCompanybyId(id);
+        } catch (SQLException ex) {
+            throw new DALException(ex.getMessage());
+        }
     }
     
     
