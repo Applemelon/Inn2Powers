@@ -59,7 +59,7 @@ public class DatabaseAcces {
     
     public List<Company> getAllCompaniesFromDatabase() throws SQLServerException, SQLException{
         try (Connection con = dbConnector.getConnection()) {
-            String sql = "SELECT * FROM Company";
+            String sql = "SELECT * FROM Company1";
             
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -77,15 +77,15 @@ public class DatabaseAcces {
 
     private Company getCompanyFromResultSetRow(ResultSet rs) throws SQLException {
         //I extract the data from the current row in the resultset:
-        int id = rs.getInt("Id");
+        int id = rs.getInt("ID");
         String name = rs.getString("Name");
         String country = rs.getString("Country");
         String address = rs.getString("Address");
         String supply = rs.getString("SupplyChainCat");
         String business = rs.getString("BusinessRole");
-        double lat = rs.getDouble("Lat");
-        double lng = rs.getDouble("Lng");
-        int isSME = rs.getInt("IsSME");
+        double lat = rs.getDouble("lat");
+        double lng = rs.getDouble("lng");
+        int isSME = rs.getInt("isSME");
         //I create the company object and add it to my list of results:
         Company company = new Company(id, name, country, address, business, supply, business, lat, lng, isSME);
         return company;
