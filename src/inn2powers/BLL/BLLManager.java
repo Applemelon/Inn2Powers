@@ -7,6 +7,7 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
+import inn2powers.DAL.DALException;
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,8 +21,12 @@ public class BLLManager {
 
     DALManager DALM;
 
-    public BLLManager() throws IOException {
-        this.DALM = new DALManager();
+    public BLLManager() throws BLLException {
+        try {
+            this.DALM = new DALManager();
+        } catch (IOException ex) {
+            throw new BLLException(ex);
+        }
     }
 
     public String[] getBusinessRoles() {
@@ -101,9 +106,13 @@ public class BLLManager {
         }
         return categoryCompanies;
     }
-    
-    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) throws IOException {
-        ReleationshipLogicTest RLT = new ReleationshipLogicTest();
-        return RLT.findRelationTo(startCompany, targetCompany);
+
+    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) throws BLLException {
+        try {
+            ReleationshipLogicTest RLT = new ReleationshipLogicTest();
+            return RLT.findRelationTo(startCompany, targetCompany);
+        } catch (IOException ex) {
+            throw new BLLException(ex);
+        }
     }
 }
