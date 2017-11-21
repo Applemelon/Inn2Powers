@@ -116,11 +116,38 @@ public class DALManager
         }
         return null;
     }
-    
+    /**
+     * add a relation
+     * @param sourceCompanyID
+     * @param targetCompanyID
+     * @param type
+     * @param Strength
+     * @return the relation as an object
+     */
     public Relation addRelation(int sourceCompanyID, int targetCompanyID,String type,  String Strength){
         //TODO add implementation
         return null;
     }
+    
+    /**
+     * removes the company with the given id
+     * @param id the id of the company
+     * @return true if succesful remove else false
+     */
+    public boolean removeCompany(int id){
+        return false;
+    }
+    
+    /**
+     * gets the company with the id
+     * @param id
+     * @return Company object
+     */
+    public Company getCompanyByID(int id){
+        return null;
+    }
+    
+    
     
     
 }
