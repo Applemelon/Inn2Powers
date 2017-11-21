@@ -49,7 +49,7 @@ public class SearchCompany {
      * @param c2 target company.
      * @return List of relations.
      */
-    public List<Relation> findRelation(Company c1, Company c2) throws Exception {
+    public List<Relation> findRelation(Company c1, Company c2) throws BLLException {
         List<List<Relation>> listOfRelations = findRelations(c1);
 
         for (List<Relation> relations : listOfRelations) {
@@ -62,7 +62,7 @@ public class SearchCompany {
             }
         }
 
-        throw new Exception("Relation between " + c1.getName() + " and " + c2.getName() + " was not found!");
+        throw new BLLException("Relation between " + c1.getName() + " and " + c2.getName() + " was not found!");
     }
 
     /**
