@@ -10,8 +10,11 @@ import be.Relation;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -37,15 +40,24 @@ public class MainWindowModel
      */
     public MainWindowModel()
     {
-        companies = new ArrayList<>();
+        try
+        {
+            bm = new BLLManager();
 
-        obsProposals = FXCollections.observableArrayList();
+            companies = new ArrayList<>();
 
-        obsBusinessRoles = FXCollections.observableArrayList();
-        obsBusinessRoles.addAll(bm.getBusinessRoles());
+            obsProposals = FXCollections.observableArrayList();
 
-        obsSupplyChainCategories = FXCollections.observableArrayList();
-        obsSupplyChainCategories.addAll(bm.getSupplyChainCategories());
+            obsBusinessRoles = FXCollections.observableArrayList();
+            obsBusinessRoles.addAll(bm.getBusinessRoles());
+
+            obsSupplyChainCategories = FXCollections.observableArrayList();
+            obsSupplyChainCategories.addAll(bm.getSupplyChainCategories());
+        }
+        catch (IOException ex)
+        {
+            //TO-DO
+        }
     }
 
     /**
