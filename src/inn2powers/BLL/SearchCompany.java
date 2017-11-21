@@ -17,13 +17,11 @@ import java.util.List;
  *
  * @author Asbamz
  */
-public class SearchCompany
-{
+public class SearchCompany {
 
     private DALManager dm;
 
-    public SearchCompany() throws IOException
-    {
+    public SearchCompany() throws IOException {
         this.dm = new DALManager();
     }
 
@@ -33,18 +31,15 @@ public class SearchCompany
      * @param name of company
      * @return company if found, else null.
      */
-    public Company findCompany(String name) throws Exception
-    {
+    public Company findCompany(String name) throws BLLException {
         List<Company> companies = dm.getAllCompanies();
-        for (Company company : companies)
-        {
-            if (company.getName().equalsIgnoreCase(name))
-            {
+        for (Company company : companies) {
+            if (company.getName().equalsIgnoreCase(name)) {
                 return company;
             }
         }
 
-        throw new Exception("Company " + name + " not found!");
+        throw new BLLException("Company " + name + " not found!");
     }
 
     /**
@@ -54,18 +49,13 @@ public class SearchCompany
      * @param c2 target company.
      * @return List of relations.
      */
-    public List<Relation> findRelation(Company c1, Company c2) throws Exception
-    {
+    public List<Relation> findRelation(Company c1, Company c2) throws Exception {
         List<List<Relation>> listOfRelations = findRelations(c1);
 
-        for (List<Relation> relations : listOfRelations)
-        {
-            if (!relations.isEmpty())
-            {
-                if (relations.get(0).getSource().getId() == c1.getId())
-                {
-                    if (relations.get(relations.size() - 1).getTarget().getId() == c2.getId())
-                    {
+        for (List<Relation> relations : listOfRelations) {
+            if (!relations.isEmpty()) {
+                if (relations.get(0).getSource().getId() == c1.getId()) {
+                    if (relations.get(relations.size() - 1).getTarget().getId() == c2.getId()) {
                         return relations;
                     }
                 }
@@ -81,8 +71,7 @@ public class SearchCompany
      * @param c Company.
      * @return A list of Relation lists which represents paths.
      */
-    public List<List<Relation>> findRelations(Company c)
-    {
+    public List<List<Relation>> findRelations(Company c) {
         List<Relation> relations = dm.getAllRelations();
         List<List<Relation>> results = new ArrayList<>();
         List<Relation> tmp = new ArrayList();
@@ -101,8 +90,7 @@ public class SearchCompany
      * @param depth depth of search. If -1 the search is unlimited.
      * @return A list of Relation lists which represents paths.
      */
-    public List<List<Relation>> findRelationsInDepth(Company c, int depth)
-    {
+    public List<List<Relation>> findRelationsInDepth(Company c, int depth) {
         List<Relation> relations = dm.getAllRelations();
         List<List<Relation>> results = new ArrayList<>();
         List<Relation> tmp = new ArrayList();
@@ -125,34 +113,27 @@ public class SearchCompany
      * @param depth depth of search. If -1 the search is unlimited.
      * @return List of a List of relation. Each list of relations is a path.
      */
-    private List<List<Relation>> findRelationsRecursion(Company c, List<Relation> tmpResults, List<Relation> foundRelations, List<Relation> allRelations, int depth)
-    {
+    private List<List<Relation>> findRelationsRecursion(Company c, List<Relation> tmpResults, List<Relation> foundRelations, List<Relation> allRelations, int depth) {
         List<List<Relation>> results = new ArrayList<>();
 
         // Iterate through all relations.
-        for (Relation relation : allRelations)
-        {
+        for (Relation relation : allRelations) {
 
-            if (depth == 0)
-            {
+            if (depth == 0) {
                 break;
             }
             // Only runs if the source of the relation is the same as the company given.
-            if (relation.getSource().getId() == c.getId())
-            {
+            if (relation.getSource().getId() == c.getId()) {
                 // Checks if the relation is already found.
                 boolean isFound = false;
-                for (Relation foundResult : foundRelations)
-                {
-                    if (foundResult.getSource().getId() == relation.getTarget().getId())
-                    {
+                for (Relation foundResult : foundRelations) {
+                    if (foundResult.getSource().getId() == relation.getTarget().getId()) {
                         isFound = true;
                     }
                 }
 
                 // If the relation to the company have not been used.
-                if (!isFound)
-                {
+                if (!isFound) {
                     // Make new array with the same values of temporary result.
                     List<Relation> result = new ArrayList<>();
                     result.addAll(tmpResults);
