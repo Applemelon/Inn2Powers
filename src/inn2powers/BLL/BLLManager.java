@@ -47,7 +47,7 @@ public class BLLManager {
 
         }
         System.out.println("Not a known business Role");
-        return null;
+        return new ArrayList<Company>();
     }
 
     /**

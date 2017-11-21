@@ -49,13 +49,14 @@ public class DALManager
      */
     public List<Company> getAllCompanies()
     {
-        try {
+        return CDAO.getAllCompanies();
+        /*try {
             //return allCompanies;
             return DBACS.getAllCompaniesFromDatabase();
         } catch (SQLException ex) {
             // add DAL exeption
         }
-        return null;
+        return null;*/
     }
 
     /**

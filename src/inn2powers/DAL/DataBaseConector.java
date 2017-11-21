@@ -24,8 +24,8 @@ public class DataBaseConector {
         dataSource.setServerName("EASV-DB2");
         dataSource.setPortNumber(1433);
         dataSource.setDatabaseName("inn2powerJan");
-        dataSource.setUser("CS2017A_14_java");
-        //dataSource.setPassword("");//indtast password
+        dataSource.setUser("CS2017A_14");
+        dataSource.setPassword("");//indtast password
     }
 
     public Connection getConnection() throws SQLServerException
