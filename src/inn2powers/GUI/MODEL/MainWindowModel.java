@@ -7,18 +7,17 @@ package inn2powers.GUI.MODEL;
 
 import be.Company;
 import be.Relation;
+import inn2powers.BE.SME;
 import inn2powers.BLL.BLLException;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -37,6 +36,8 @@ public class MainWindowModel
     ObservableList<String> obsBusinessRoles;
     ObservableList<String> obsSupplyChainCategories;
 
+    Image logo;
+
     /**
      * Constructor initiates variables.
      */
@@ -44,6 +45,8 @@ public class MainWindowModel
     {
         try
         {
+            logo = new Image("inn2powers/media/inn2power.jpg");
+
             bm = new BLLManager();
 
             companies = new ArrayList<>();
@@ -92,6 +95,16 @@ public class MainWindowModel
     {
         companies.clear();
         companies.addAll(bm.getCompaniesFromCategories(category));
+    }
+
+    /**
+     * Gets the logo image.
+     *
+     * @return logo image.
+     */
+    public Image getLogo()
+    {
+        return logo;
     }
 
     /**
@@ -196,10 +209,13 @@ public class MainWindowModel
             for (Iterator<Company> it = tmpCompanies.iterator(); it.hasNext();)
             {
                 Company c = it.next();
-                if (c.getName().substring(0, str.length()).equalsIgnoreCase(str))
+                if (c.getName().length() >= str.length())
                 {
-                    it.remove();
-                    obsProposals.add(c.getName());
+                    if (c.getName().substring(0, str.length()).equalsIgnoreCase(str))
+                    {
+                        it.remove();
+                        obsProposals.add(c.getName());
+                    }
                 }
             }
 
@@ -212,5 +228,19 @@ public class MainWindowModel
                 }
             }
         }
+    }
+
+    public List<String> getCountries()
+    {
+        List<String> countries = new ArrayList<>();
+        countries.add("Denmark");
+        countries.add("England");
+        countries.add("Nederland");
+        countries.add("Germany");
+        countries.add("France");
+        countries.add("Sweden");
+        countries.add("Norway");
+        countries.add("Finland");
+        return countries;
     }
 }

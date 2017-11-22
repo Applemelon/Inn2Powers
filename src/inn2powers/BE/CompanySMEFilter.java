@@ -14,14 +14,14 @@ import be.Company;
 public class CompanySMEFilter implements ICompanyFilter
 {
 
-    private final int sme;
+    private final SME sme;
 
     /**
      * Company SME filter.
      *
      * @param sme to filter.
      */
-    public CompanySMEFilter(int sme)
+    public CompanySMEFilter(SME sme)
     {
         this.sme = sme;
     }
@@ -35,7 +35,7 @@ public class CompanySMEFilter implements ICompanyFilter
     @Override
     public boolean meetsCriteria(Company company)
     {
-        return company.getIsSME() == sme;
+        return company.getIsSME() == sme.getNumber();
     }
 
 }

@@ -22,14 +22,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -51,6 +54,22 @@ public class MainWindowController implements Initializable
     private ComboBox<String> comboUnderbrancherSelected;
     @FXML
     private Accordion accordion;
+    @FXML
+    private ImageView imgLogo;
+    @FXML
+    private TextField txtMaxRange;
+    @FXML
+    private VBox hboxFilter;
+    @FXML
+    private CheckBox chkIsSME;
+    @FXML
+    private CheckBox chkIsNotSME;
+    @FXML
+    private CheckBox chkUnknown;
+    @FXML
+    private ArrayList<CheckBox> smeChkLst;
+    @FXML
+    private ArrayList<CheckBox> countryChkLst;
 
     private MainWindowModel MWModel;
     private BLLManager BLLM;
@@ -77,7 +96,18 @@ public class MainWindowController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        imgLogo.setImage(MWModel.getLogo());
+
         comboSearch.setItems(MWModel.getObsProposals());
+
+        // Check for modifier key press. example: Ctrl, Alt, Shift.
+        comboSearch.setOnKeyPressed(event ->
+        {
+            if (event.getCode().isModifierKey())
+            {
+                modifierKeyCount++;
+            }
+        });
 
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
@@ -89,14 +119,11 @@ public class MainWindowController implements Initializable
         comboUnderbrancherSelected.setItems(MWModel.getObsSupplyChainCategories());
         comboUnderbrancherSelected.getSelectionModel().selectFirst();
 
-        // Check for modifier key press. example: Ctrl, Alt, Shift.
-        comboSearch.setOnKeyPressed(event ->
-        {
-            if (event.getCode().isModifierKey())
-            {
-                modifierKeyCount++;
-            }
-        });
+        smeChkLst.add(chkIsSME);
+        smeChkLst.add(chkIsNotSME);
+        smeChkLst.add(chkUnknown);
+
+        fillCountryFilter(MWModel.getCountries());
     }
 
     /**
@@ -272,6 +299,16 @@ public class MainWindowController implements Initializable
 
             gridTitlePane.setContent(grid);
             accordion.getPanes().add(gridTitlePane);
+        }
+    }
+
+    private void fillCountryFilter(List<String> countries)
+    {
+        for (String country : countries)
+        {
+            CheckBox chk = new CheckBox(country);
+            countryChkLst.add(chk);
+            hboxFilter.getChildren().add(chk);
         }
     }
 }
