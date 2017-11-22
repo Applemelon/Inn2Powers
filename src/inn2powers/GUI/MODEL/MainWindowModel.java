@@ -7,6 +7,7 @@ package inn2powers.GUI.MODEL;
 
 import be.Company;
 import be.Relation;
+import inn2powers.BLL.BLLException;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
@@ -54,7 +55,7 @@ public class MainWindowModel
             obsSupplyChainCategories = FXCollections.observableArrayList();
             obsSupplyChainCategories.addAll(bm.getSupplyChainCategories());
         }
-        catch (IOException ex)
+        catch (BLLException ex)
         {
             //TO-DO
         }
