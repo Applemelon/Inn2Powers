@@ -81,9 +81,10 @@ public class BLLManager {
 
     /**
      * returns all the companies with a given supplyChainCategori, also cheks if
-     * it is a valid supplyChainCategori will write to the console and return
+     * it is a valid supplyChainCategori will return
      * null if not
      *
+     * @param Category
      * @param supplyChainCategori the supplyChainCategori the companies should
      * have as a String
      * @return a list of companies
