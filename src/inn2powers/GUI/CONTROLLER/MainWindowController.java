@@ -11,6 +11,7 @@ import inn2powers.BLL.BLLManager;
 import inn2powers.GUI.MODEL.MainWindowModel;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -50,8 +52,10 @@ public class MainWindowController implements Initializable
     @FXML
     private Accordion accordion;
 
-    MainWindowModel MWModel;
-    BLLManager BLLM;
+    private MainWindowModel MWModel;
+    private BLLManager BLLM;
+    private int caretPosition = 0;
+    private int modifierKeyCount = 0;
 
     /**
      * Constructor which initiates variables.
@@ -77,10 +81,22 @@ public class MainWindowController implements Initializable
 
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
+        comboSearchType.getSelectionModel().selectFirst();
 
         comboOverbrancherSelected.setItems(MWModel.getObsBusinessRoles());
+        comboOverbrancherSelected.getSelectionModel().selectFirst();
 
         comboUnderbrancherSelected.setItems(MWModel.getObsSupplyChainCategories());
+        comboUnderbrancherSelected.getSelectionModel().selectFirst();
+
+        // Check for modifier key press. example: Ctrl, Alt, Shift.
+        comboSearch.setOnKeyPressed(event ->
+        {
+            if (event.getCode().isModifierKey())
+            {
+                modifierKeyCount++;
+            }
+        });
     }
 
     /**
@@ -91,56 +107,81 @@ public class MainWindowController implements Initializable
     @FXML
     private void handleProposal(KeyEvent event)
     {
-        comboSearch.hide();
-        comboSearch.getItems().clear();
-
-        String str = comboSearch.getEditor().getText();
-        int count = 0;
-
-        if (str == null)
+        // Check if modifier key is released.
+        if (event.getCode().isModifierKey())
         {
-
+            modifierKeyCount--;
         }
-        else if (str.length() == 1)
+        // Check if key release is letter, backspace, space or delete and if no modifier key is pressed.
+        else if ((event.getCode().isLetterKey() || (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE || event.getCode() == KeyCode.SPACE)) && modifierKeyCount == 0)
         {
-            List<Company> companies = MWModel.getCompanies();
-            for (Company company : companies)
+            // Get current position for caret.
+            caretPosition = comboSearch.getEditor().getCaretPosition();
+
+            // Hide dropdown menu.
+            comboSearch.hide();
+
+            // Get current text.
+            String str = comboSearch.getEditor().getText();
+
+            // Clear items in comboBox.
+            comboSearch.getItems().clear();
+
+            // If the current text is not null.
+            if (str != null)
             {
-                if (company.getName().toLowerCase().charAt(0) == str.toLowerCase().charAt(0))
+                // If the current text is longer than 0.
+                if (str.length() > 0)
                 {
-                    comboSearch.getItems().add(company.getName());
-                    count++;
+                    // Set text in comboBox.
+                    comboSearch.getEditor().setText(str);
+
+                    // If the caret position is shorter than the text length.
+                    if (caretPosition <= str.length())
+                    {
+                        // Set caret position to saved caret position.
+                        comboSearch.getEditor().positionCaret(caretPosition);
+                    }
+                    else
+                    {
+                        // Set caret position to end of text.
+                        comboSearch.getEditor().positionCaret(str.length());
+                    }
+                }
+
+                MWModel.updateProposal(str);
+
+                // If any result, show dropdown menu.
+                if (comboSearch.getItems().size() > 0)
+                {
+                    comboSearch.show();
                 }
             }
-            if (count > 0)
-            {
-                comboSearch.show();
-            }
         }
-        else if (!str.isEmpty())
-        {
-            List<Company> companies = MWModel.getCompanies();
-            for (Company company : companies)
-            {
-                if (company.getName().toLowerCase().contains(str.toLowerCase()))
-                {
-                    comboSearch.getItems().add(company.getName());
-                    count++;
-                }
-            }
-            if (count > 0)
-            {
-                comboSearch.show();
-            }
-        }
-        System.out.println(comboSearch.getEditor().getText());
     }
 
+    /**
+     * Change text in comboBox on selection from comboBox dropdown menu.
+     *
+     * @param event
+     */
     @FXML
     private void handleProposalSelection(ActionEvent event)
     {
-        comboSearch.getEditor().setText(comboSearch.getSelectionModel().getSelectedItem());
-        System.out.println(comboSearch.getEditor().getText());
+        // Get selected item.
+        String str = comboSearch.getSelectionModel().getSelectedItem();
+
+        // If the selected item is not null.
+        if (str != null)
+        {
+            // If the item is longer than 0.
+            if (str.length() > 0)
+            {
+                // Set text in comboBox and set caret position to end of text.
+                comboSearch.getEditor().setText(str);
+                comboSearch.getEditor().positionCaret(str.length());
+            }
+        }
     }
 
     /**

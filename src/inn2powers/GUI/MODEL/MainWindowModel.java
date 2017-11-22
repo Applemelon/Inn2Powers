@@ -13,6 +13,7 @@ import inn2powers.BLL.SearchCompany;
 import inn2powers.BLL.BLLManager;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -179,5 +180,37 @@ public class MainWindowModel
     public List<Company> findCompaniesByRole(Company c, String r)
     {
         return bm.getCompanysFromBusinessRole(r);
+    }
+
+    public void updateProposal(String str)
+    {
+        str = str.trim();
+        // If the String is not empty.
+        if (!str.isEmpty())
+        {
+            // Save companies to temporary arrayList.
+            List<Company> tmpCompanies = new ArrayList();
+            tmpCompanies.addAll(getCompanies());
+
+            // First get company names beginning with the search.
+            for (Iterator<Company> it = tmpCompanies.iterator(); it.hasNext();)
+            {
+                Company c = it.next();
+                if (c.getName().substring(0, str.length()).equalsIgnoreCase(str))
+                {
+                    it.remove();
+                    obsProposals.add(c.getName());
+                }
+            }
+
+            // Get Company names containing search.
+            for (Company company : tmpCompanies)
+            {
+                if (company.getName().toLowerCase().contains(str.toLowerCase()))
+                {
+                    obsProposals.add(company.getName());
+                }
+            }
+        }
     }
 }

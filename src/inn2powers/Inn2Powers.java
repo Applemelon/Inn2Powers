@@ -5,11 +5,6 @@
  */
 package inn2powers;
 
-import inn2powers.DAL.AddALLCompaniesToDatabase;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,25 +15,29 @@ import javafx.stage.Stage;
  *
  * @author Alex
  */
-public class Inn2Powers extends Application {
-    
+public class Inn2Powers extends Application
+{
+
     @Override
 
-    public void start(Stage stage) throws Exception {    
+    public void start(Stage stage) throws Exception
+    {
         Parent root = FXMLLoader.load(getClass().getResource("GUI/VIEW/MainWindow.fxml"));
 
-        
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
+        stage.setTitle("Inn2Power");
+        stage.setResizable(false);
         stage.show();
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         launch(args);
     }
-    
+
 }
