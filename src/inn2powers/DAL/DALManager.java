@@ -34,10 +34,10 @@ public class DALManager
     {
         this.CDAO = new CompanyDAO();
         this.RDAO = new RelationDAO();
-        CReader = new CompanyReader();
+        //CReader = new CompanyReader();
         DBACS = new DatabaseAcces();
-        //allCompanies = CReader.getAllCompanies();
-        allCompanies = CDAO.getAllCompanies();
+        //allCompanies = CReader.getAllCompanies();//the CSV reader
+        //allCompanies = CDAO.getAllCompanies();
     }
 
     /**
@@ -45,16 +45,16 @@ public class DALManager
      *
      * @return a list of companies
      */
-    public List<Company> getAllCompanies()
+    public List<Company> getAllCompanies() throws DALException
     {
         //return CDAO.getAllCompanies();
         try {
             //return allCompanies;
             return DBACS.getAllCompaniesFromDatabase();
         } catch (SQLException ex) {
-            // add DAL exeption
+            throw new DALException(ex.getMessage());
         }
-        return null;
+        
     }
 
     /**
@@ -62,7 +62,7 @@ public class DALManager
      *
      * @param id the id as an int
      * @return
-     * @throws Inn2PowerException
+     * @throws inn2powers.DAL.DALException
      */
     public Company getCompany(int id) throws DALException
     {
@@ -97,14 +97,21 @@ public class DALManager
      * get all relations objects
      *
      * @return a list with the objects
+     * @throws inn2powers.DAL.DALException
      */
     public List<Relation> getAllRelations()
     {
+        /*try {
+            return DBACS.getAllRelationsFromDatabase();
+        } catch (SQLException ex) {
+            throw new DALException(ex.getMessage());
+        }*/
         return RDAO.getAllRelations();
     }
     
     /**
      * adds a company
+     * @param ID this has to be unique
      * @param name
      * @param address 
      * @param country
@@ -115,6 +122,7 @@ public class DALManager
      * @param lng
      * @param isSME
      * @return returns the made company with the auto generated ID
+     * @throws inn2powers.DAL.DALException
      */
     
     public Company addCompany(int ID,String name, String address, String country, String website, String supplyChainCat, String businessRole, double lat, double lng, int isSME) throws DALException{
@@ -132,6 +140,7 @@ public class DALManager
      * @param type
      * @param Strength
      * @return the relation as an object
+     * @throws inn2powers.DAL.DALException
      */
     public Relation addRelation(Company sourceCompany, Company targetCompany,String type,  String Strength) throws DALException{
         try {
@@ -145,6 +154,7 @@ public class DALManager
      * removes the company with the given id
      * @param id the id of the company
      * @return true if succesful remove else false
+     * @throws inn2powers.DAL.DALException
      */
     public boolean removeCompany(int id) throws DALException{
         
@@ -155,9 +165,4 @@ public class DALManager
         }
         
     }
-    
-    
-    
-    
-    
 }

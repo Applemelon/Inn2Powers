@@ -98,6 +98,27 @@ public class DatabaseAcces {
             return allCompanies;
         }
     }
+    
+    public List<Relation> getAllRelationsFromDatabase() throws SQLServerException, SQLException{
+        try (Connection con = dbConnector.getConnection()) {
+            String sql = "SELECT * FROM Relation";
+            
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            List<Relation> allRelations = new ArrayList<>(); 
+            while (rs.next()) //While there are relations (rows) in the result set:
+            {
+                Relation relation = new Relation(getCompanybyId(rs.getInt("SourceID")),
+                        getCompanybyId(rs.getInt("TargetID")) , rs.getString("Type"), rs.getString("Strength"));
+                allRelations.add(relation);
+            }
+            //I return all the found relations:
+            return allRelations;
+        }
+    }
+    
+    
 
     private Company getCompanyFromResultSetRow(ResultSet rs) throws SQLException {
         //I extract the data from the current row in the resultset:
