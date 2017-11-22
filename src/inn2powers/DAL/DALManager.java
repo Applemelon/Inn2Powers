@@ -99,14 +99,14 @@ public class DALManager
      * @return a list with the objects
      * @throws inn2powers.DAL.DALException
      */
-    public List<Relation> getAllRelations()
+    public List<Relation> getAllRelations() throws DALException
     {
-        /*try {
+        try {
             return DBACS.getAllRelationsFromDatabase();
         } catch (SQLException ex) {
             throw new DALException(ex.getMessage());
-        }*/
-        return RDAO.getAllRelations();
+        }
+        //return RDAO.getAllRelations();
     }
     
     /**
