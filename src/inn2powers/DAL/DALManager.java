@@ -13,8 +13,6 @@ import dal.RelationDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -66,9 +64,13 @@ public class DALManager
      * @return
      * @throws Inn2PowerException
      */
-    public Company getCompany(int id) throws Inn2PowerException
+    public Company getCompany(int id) throws DALException
     {
-        return CDAO.getCompanyById(id);
+        try {
+            return DBACS.getCompanybyId(id);
+        } catch (SQLException ex) {
+            throw new DALException(ex.getMessage());
+        }
     }
 
     /**
@@ -154,18 +156,6 @@ public class DALManager
         
     }
     
-    /**
-     * gets the company with the id
-     * @param id
-     * @return Company object
-     */
-    public Company getCompanyByID(int id) throws DALException{
-        try {
-            return DBACS.getCompanybyId(id);
-        } catch (SQLException ex) {
-            throw new DALException(ex.getMessage());
-        }
-    }
     
     
     
