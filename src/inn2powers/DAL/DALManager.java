@@ -7,7 +7,6 @@ package inn2powers.DAL;
 
 import be.Company;
 import be.Relation;
-import bll.Inn2PowerException;
 import dal.CompanyDAO;
 import dal.RelationDAO;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class DALManager
     public DALManager() throws IOException
     {
         this.CDAO = new CompanyDAO();
-        this.RDAO = new RelationDAO();
+        //this.RDAO = new RelationDAO();
         //CReader = new CompanyReader();
         DBACS = new DatabaseAcces();
         //allCompanies = CReader.getAllCompanies();//the CSV reader
@@ -44,6 +43,7 @@ public class DALManager
      * return all the companies in the database
      *
      * @return a list of companies
+     * @throws inn2powers.DAL.DALException
      */
     public List<Company> getAllCompanies() throws DALException
     {
