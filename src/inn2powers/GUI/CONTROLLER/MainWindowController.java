@@ -6,6 +6,7 @@
 package inn2powers.GUI.CONTROLLER;
 
 import be.Company;
+import inn2powers.BLL.BLLException;
 import inn2powers.BLL.BLLManager;
 import inn2powers.GUI.MODEL.MainWindowModel;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
@@ -36,7 +38,7 @@ public class MainWindowController implements Initializable
 {
 
     @FXML
-    private ComboBox<String> txtSearch;
+    private ComboBox<String> comboSearch;
     @FXML
     private ComboBox<String> comboSearchType;
     @FXML
@@ -56,7 +58,7 @@ public class MainWindowController implements Initializable
      *
      * @throws IOException
      */
-    public MainWindowController() throws IOException
+    public MainWindowController() throws IOException, BLLException
     {
         this.BLLM = new BLLManager();
         this.MWModel = new MainWindowModel();
@@ -71,7 +73,7 @@ public class MainWindowController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        txtSearch.setItems(MWModel.getObsProposals());
+        comboSearch.setItems(MWModel.getObsProposals());
 
         comboSearchType.setItems(FXCollections.observableArrayList("Firmaer", "Overbrancher", "Underbrancher"));
         comboSearchType.setVisibleRowCount(3);
@@ -89,19 +91,30 @@ public class MainWindowController implements Initializable
     @FXML
     private void handleProposal(KeyEvent event)
     {
-        txtSearch.getItems().clear();
+        comboSearch.hide();
+        comboSearch.getItems().clear();
 
-        String str = txtSearch.getPromptText();
+        String str = comboSearch.getEditor().getText();
+        int count = 0;
 
-        if (str.length() == 1)
+        if (str == null)
+        {
+
+        }
+        else if (str.length() == 1)
         {
             List<Company> companies = MWModel.getCompanies();
             for (Company company : companies)
             {
-                if (company.getName().charAt(0) == str.charAt(0))
+                if (company.getName().toLowerCase().charAt(0) == str.toLowerCase().charAt(0))
                 {
-                    txtSearch.getItems().add(company.getName());
+                    comboSearch.getItems().add(company.getName());
+                    count++;
                 }
+            }
+            if (count > 0)
+            {
+                comboSearch.show();
             }
         }
         else if (!str.isEmpty())
@@ -109,12 +122,25 @@ public class MainWindowController implements Initializable
             List<Company> companies = MWModel.getCompanies();
             for (Company company : companies)
             {
-                if (company.getName().contains(str))
+                if (company.getName().toLowerCase().contains(str.toLowerCase()))
                 {
-                    txtSearch.getItems().add(company.getName());
+                    comboSearch.getItems().add(company.getName());
+                    count++;
                 }
             }
+            if (count > 0)
+            {
+                comboSearch.show();
+            }
         }
+        System.out.println(comboSearch.getEditor().getText());
+    }
+
+    @FXML
+    private void handleProposalSelection(ActionEvent event)
+    {
+        comboSearch.getEditor().setText(comboSearch.getSelectionModel().getSelectedItem());
+        System.out.println(comboSearch.getEditor().getText());
     }
 
     /**

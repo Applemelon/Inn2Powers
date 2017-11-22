@@ -11,6 +11,6 @@ and open the template in the editor.
 /*
     Removes Arrow on ComboBox
 */
-#txtSearch .arrow, #txtSearch .arrow-button{
+#comboSearch .arrow, #comboSearch .arrow-button{
     -fx-background-color: transparent;
 }
