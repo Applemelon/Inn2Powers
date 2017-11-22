@@ -12,6 +12,8 @@ import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +46,7 @@ public class BLLManager {
      * @param Role the role the companies should have as a String
      * @return a list of companies
      */
-    public List<Company> getCompanysFromBusinessRole(String Role) {
+    public List<Company> getCompanysFromBusinessRole(String Role) throws BLLException {
         for (int i = 0; i < getBusinessRoles().length; i++) {
             if (getBusinessRoles()[i].equals(Role)) {
                 return getListofBusiniessesFromRole(Role);
@@ -61,8 +63,13 @@ public class BLLManager {
      * @param Role the role the companies should have as a String
      * @return a List of companies
      */
-    private List<Company> getListofBusiniessesFromRole(String Role) {
-        List<Company> allCompanies = DALM.getAllCompanies();
+    private List<Company> getListofBusiniessesFromRole(String Role) throws BLLException {
+        List<Company> allCompanies;
+        try {
+            allCompanies = DALM.getAllCompanies();
+        } catch (DALException ex) {
+            throw new BLLException(ex.getMessage());
+        }
         List<Company> roleCompanies = new ArrayList<>();
         for (Company company : allCompanies) {
             if (company.getBuisnessRole().equals(Role)) {
@@ -81,7 +88,7 @@ public class BLLManager {
      * have as a String
      * @return a list of companies
      */
-    public List<Company> getCompaniesFromCategories(String Category) {
+    public List<Company> getCompaniesFromCategories(String Category) throws BLLException {
         for (int i = 0; i < getSupplyChainCategories().length; i++) {
             if (getSupplyChainCategories()[i].equals(Category)) {
                 return getListOfCompaniesFromCategory(Category);
@@ -96,8 +103,13 @@ public class BLLManager {
      * @param Category
      * @return list of
      */
-    private List<Company> getListOfCompaniesFromCategory(String Category) {
-        List<Company> allCompanies = DALM.getAllCompanies();
+    private List<Company> getListOfCompaniesFromCategory(String Category) throws BLLException {
+        List<Company> allCompanies;
+        try {
+            allCompanies = DALM.getAllCompanies();
+        } catch (DALException ex) {
+            throw new BLLException(ex.getMessage());
+        }
         List<Company> categoryCompanies = new ArrayList<>();
         for (Company company : allCompanies) {
             if (company.getSupplyChainCategoriy().equals(Category)) {

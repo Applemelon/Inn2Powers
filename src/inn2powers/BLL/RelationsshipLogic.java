@@ -7,6 +7,7 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
+import inn2powers.DAL.DALException;
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class RelationsshipLogic {
         dm = new DALManager();
     }
 
-    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) {
+    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) throws DALException {
         List<Relation> relations = dm.getAllRelations();
         List<Company> LayerOne = new ArrayList<>();
         List<Relation> LayerOneR = new ArrayList<>();

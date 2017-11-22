@@ -7,11 +7,14 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
+import inn2powers.DAL.DALException;
 
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,7 +35,12 @@ public class SearchCompany {
      * @return company if found, else null.
      */
     public Company findCompany(String name) throws BLLException {
-        List<Company> companies = dm.getAllCompanies();
+        List<Company> companies;
+        try {
+            companies = dm.getAllCompanies();
+        } catch (DALException ex) {
+            throw new BLLException("DAL:" + ex.getMessage());
+        }
         for (Company company : companies) {
             if (company.getName().equalsIgnoreCase(name)) {
                 return company;
@@ -70,9 +78,15 @@ public class SearchCompany {
      *
      * @param c Company.
      * @return A list of Relation lists which represents paths.
+     * @throws inn2powers.BLL.BLLException
      */
-    public List<List<Relation>> findRelations(Company c) {
-        List<Relation> relations = dm.getAllRelations();
+    public List<List<Relation>> findRelations(Company c) throws BLLException {
+        List<Relation> relations;
+        try {
+            relations = dm.getAllRelations();
+        } catch (DALException ex) {
+            throw new BLLException(ex.getMessage());
+        }
         List<List<Relation>> results = new ArrayList<>();
         List<Relation> tmp = new ArrayList();
         List<Relation> found = new ArrayList();
@@ -90,8 +104,13 @@ public class SearchCompany {
      * @param depth depth of search. If -1 the search is unlimited.
      * @return A list of Relation lists which represents paths.
      */
-    public List<List<Relation>> findRelationsInDepth(Company c, int depth) {
-        List<Relation> relations = dm.getAllRelations();
+    public List<List<Relation>> findRelationsInDepth(Company c, int depth) throws BLLException {
+        List<Relation> relations;
+        try {
+            relations = dm.getAllRelations();
+        } catch (DALException ex) {
+            throw new BLLException(ex.getMessage());
+        }
         List<List<Relation>> results = new ArrayList<>();
         List<Relation> tmp = new ArrayList();
         List<Relation> found = new ArrayList();

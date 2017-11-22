@@ -7,10 +7,13 @@ package inn2powers.BLL;
 
 import be.Company;
 import be.Relation;
+import inn2powers.DAL.DALException;
 import inn2powers.DAL.DALManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,8 +31,21 @@ public class ReleationshipLogicTest {
 
     }
 
-    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) {
-        List<Relation> relations = dm.getAllRelations();
+    
+    /**
+     * Checks for a path of relations between two companies
+     * @param startCompany
+     * @param targetCompany
+     * @return a list of relations from one company to the other
+     * @throws BLLException 
+     */
+    public List<Relation> findRelationTo(Company startCompany, Company targetCompany) throws BLLException {
+        List<Relation> relations;
+        try {
+            relations = dm.getAllRelations();
+        } catch (DALException ex) {
+            throw new BLLException(ex.getMessage());
+        }
 
         List<Company> startList = new ArrayList<>();
 

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class AddALLCompaniesToDatabase {
 
-    public AddALLCompaniesToDatabase() throws IOException, SQLException {
+    public AddALLCompaniesToDatabase() throws IOException, SQLException, DALException {
         DALManager dal = new DALManager();
         List<Company> companies = dal.getAllCompanies();
         addCompanies(companies);
