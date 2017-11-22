@@ -9,6 +9,22 @@ package inn2powers.BLL;
  *
  * @author Lea Freidahl
  */
-public class BLLException {
+public class BLLException extends Exception
+{
+
+    public BLLException(String message)
+    {
+        super(message);
+    }
+
+    public BLLException(String message, Throwable cause)
+    {
+        super(message, cause);
+    }
+
+    public BLLException(Throwable cause)
+    {
+        super(cause);
+    }
 
 }
