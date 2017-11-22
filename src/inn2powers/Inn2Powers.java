@@ -39,8 +39,8 @@ public class Inn2Powers extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, SQLException, DALException{
-        AddAllRelationsToDatabase aa = new AddAllRelationsToDatabase(); 
+    public static void main(String[] args){
+        
         launch(args);
     }
     
