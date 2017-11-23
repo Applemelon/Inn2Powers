@@ -26,17 +26,17 @@ import javafx.scene.image.Image;
 public class MainWindowModel
 {
 
-    SearchCompany searchCompany;
-    BLLManager bm;
-    Filter filter;
+    private SearchCompany searchCompany;
+    private BLLManager bm;
+    private Filter filter;
 
-    List<Company> companies;
+    private List<Company> companies;
 
-    ObservableList<String> obsProposals;
-    ObservableList<String> obsBusinessRoles;
-    ObservableList<String> obsSupplyChainCategories;
+    private ObservableList<String> obsProposals;
+    private ObservableList<String> obsBusinessRoles;
+    private ObservableList<String> obsSupplyChainCategories;
 
-    Image logo;
+    private Image logo;
 
     /**
      * Constructor initiates variables.
