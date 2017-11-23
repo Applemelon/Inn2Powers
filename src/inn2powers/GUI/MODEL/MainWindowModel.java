@@ -7,7 +7,6 @@ package inn2powers.GUI.MODEL;
 
 import be.Company;
 import be.Relation;
-import inn2powers.BE.SME;
 import inn2powers.BLL.BLLException;
 import inn2powers.BLL.Filter;
 import inn2powers.BLL.SearchCompany;
@@ -50,6 +49,7 @@ public class MainWindowModel
             bm = new BLLManager();
 
             companies = new ArrayList<>();
+            updateCompanies();
 
             obsProposals = FXCollections.observableArrayList();
 
@@ -73,6 +73,12 @@ public class MainWindowModel
     public List<Company> getCompanies()
     {
         return companies;
+    }
+
+    public void updateCompanies()
+    {
+        companies.clear();
+        companies.addAll(bm.getAllCompanies());
     }
 
     /**
@@ -233,14 +239,14 @@ public class MainWindowModel
     public List<String> getCountries()
     {
         List<String> countries = new ArrayList<>();
-        countries.add("Denmark");
-        countries.add("England");
-        countries.add("Nederland");
-        countries.add("Germany");
-        countries.add("France");
-        countries.add("Sweden");
-        countries.add("Norway");
-        countries.add("Finland");
+        for (Company company : companies)
+        {
+            if (!countries.contains(company.getCountry()))
+            {
+                countries.add(company.getCountry());
+            }
+        }
+        countries.sort(String.CASE_INSENSITIVE_ORDER);
         return countries;
     }
 }

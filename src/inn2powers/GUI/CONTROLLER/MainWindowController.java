@@ -131,6 +131,7 @@ public class MainWindowController implements Initializable
         smeChkLst.add(chkIsNotSME);
         smeChkLst.add(chkUnknown);
 
+        fillAccordion(MWModel.getCompanies());
         fillCountryFilter(MWModel.getCountries());
     }
 
@@ -230,6 +231,7 @@ public class MainWindowController implements Initializable
             //If "Firmaer" is selected in comboSearchType...
             case 0:
             {
+                System.out.println("case 0");
                 txtFirmaerSelected.setVisible(true);
                 comboOverbrancherSelected.setVisible(false);
                 comboUnderbrancherSelected.setVisible(false);
@@ -238,6 +240,7 @@ public class MainWindowController implements Initializable
             //If "Overbrancher" is selected in comboSearchType...
             case 1:
             {
+                System.out.println("case 1");
                 txtFirmaerSelected.setVisible(false);
                 comboOverbrancherSelected.setVisible(true);
                 comboUnderbrancherSelected.setVisible(false);
@@ -246,6 +249,7 @@ public class MainWindowController implements Initializable
             //If "Underbrancher" is selected in comboSearchType...
             case 2:
             {
+                System.out.println("case 2");
                 txtFirmaerSelected.setVisible(false);
                 comboOverbrancherSelected.setVisible(false);
                 comboUnderbrancherSelected.setVisible(true);
@@ -262,17 +266,17 @@ public class MainWindowController implements Initializable
     @FXML
     private void handleSearch()
     {
-        if (!comboOverbrancherSelected.getSelectionModel().isEmpty())
+        if (comboOverbrancherSelected.isVisible())
         {
-            if (comboOverbrancherSelected.isVisible())
+            if (!comboOverbrancherSelected.getSelectionModel().isEmpty())
             {
                 MWModel.updateForBusinessRoles(comboOverbrancherSelected.getValue());
                 fillAccordion(MWModel.getCompanies());
             }
         }
-        else if (!comboUnderbrancherSelected.getSelectionModel().isEmpty())
+        else if (comboUnderbrancherSelected.isVisible())
         {
-            if (comboUnderbrancherSelected.isVisible())
+            if (!comboUnderbrancherSelected.getSelectionModel().isEmpty())
             {
                 MWModel.updateForSupplyChainCategories(comboUnderbrancherSelected.getValue());
                 fillAccordion(MWModel.getCompanies());
