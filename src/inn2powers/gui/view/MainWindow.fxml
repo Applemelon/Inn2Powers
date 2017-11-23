@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.util.ArrayList?>
+
+<AnchorPane id="AnchorPane" maxHeight="521.0" maxWidth="784.0" minHeight="521.0" minWidth="784.0" prefHeight="521.0" prefWidth="784.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inn2powers.gui.controller.MainWindowController">
+    <children>
+        <ImageView fx:id="imgLogo" fitHeight="59.0" fitWidth="216.0" layoutX="9.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        <Label layoutX="234.0" layoutY="26.0" text="Firma" />
+        <ComboBox fx:id="comboSearch" editable="true" layoutX="234.0" layoutY="44.0" onAction="#handleProposalSelection" onKeyReleased="#handleProposal" prefWidth="150.0" promptText="Indtast firma..." />
+        <Label layoutX="407.0" layoutY="26.0" text="Søg:" />
+        <ComboBox fx:id="comboSearchType" layoutX="407.0" layoutY="44.0" onAction="#handleSearchType" prefWidth="150.0" />
+        <TextField fx:id="txtFirmaerSelected" layoutX="579.0" layoutY="44.0" visible="true" />
+        <ComboBox fx:id="comboUnderbrancherSelected" layoutX="578.0" layoutY="44.0" prefWidth="150.0" visible="false" />
+        <ComboBox fx:id="comboOverbrancherSelected" layoutX="578.0" layoutY="44.0" prefWidth="150.0" visible="false" />
+        <Button layoutX="738.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleSearch" text="Søg" />
+        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="9.0" layoutY="86.0" prefHeight="426.0" prefWidth="651.0">
+            <content>
+                <AnchorPane maxWidth="684.0" minWidth="280.0" prefHeight="399.0" prefWidth="462.0">
+                    <children>
+                        <Accordion fx:id="accordion" prefHeight="426.0" prefWidth="638.0" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <ScrollPane layoutX="660.0" layoutY="86.0" prefHeight="426.0" prefWidth="126.0">
+            <content>
+                <VBox fx:id="hboxFilter" prefHeight="200.0" prefWidth="115.0" spacing="2.0">
+                    <children>
+                        <Label text="SME:">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <CheckBox fx:id="chkIsSME" mnemonicParsing="false" text="is SME">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="chkIsNotSME" mnemonicParsing="false" text="is not SME">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="chkUnknown" mnemonicParsing="false" text="unknown">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </CheckBox>
+                        <Separator prefWidth="200.0">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Separator>
+                        <Label text="Max Afstand (km):">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtMaxRange" prefHeight="25.0" prefWidth="103.0">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </TextField>
+                        <Separator prefWidth="200.0">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Separator>
+                        <Label text="Land:" />
+                    </children>
+                    <padding>
+                        <Insets left="5.0" right="5.0" top="3.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+
+    <fx:define>
+        <ArrayList fx:id="smeChkLst">
+        </ArrayList>
+        <ArrayList fx:id="countryChkLst">
+        </ArrayList>
+    </fx:define>
+
+    <stylesheets>
+        <URL value="@MainWindow.css" />
+    </stylesheets>
+</AnchorPane>

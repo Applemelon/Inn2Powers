@@ -22,7 +22,7 @@ public class Inn2Powers extends Application
 
     public void start(Stage stage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/VIEW/MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainWindow.fxml"));
 
         Scene scene = new Scene(root);
 
