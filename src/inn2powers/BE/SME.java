@@ -11,7 +11,7 @@ package inn2powers.BE;
  */
 public enum SME
 {
-    unknown(-1), isnotSME(0), isSME(1);
+    UNKNOWN(-1), ISNOTSME(0), ISSME(1);
 
     int number;
 

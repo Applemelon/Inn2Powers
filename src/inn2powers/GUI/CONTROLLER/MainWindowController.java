@@ -6,6 +6,10 @@
 package inn2powers.GUI.CONTROLLER;
 
 import be.Company;
+import inn2powers.BE.CompanyCountryFilter;
+import inn2powers.BE.CompanySMEFilter;
+import inn2powers.BE.ICompanyFilter;
+import static inn2powers.BE.SME.*;
 import inn2powers.BLL.BLLException;
 import inn2powers.BLL.BLLManager;
 import inn2powers.GUI.MODEL.MainWindowModel;
@@ -75,6 +79,8 @@ public class MainWindowController implements Initializable
     private BLLManager BLLM;
     private int caretPosition = 0;
     private int modifierKeyCount = 0;
+    private List<CompanySMEFilter> smeFilter;
+    private List<CompanyCountryFilter> countryFilter;
 
     /**
      * Constructor which initiates variables.
@@ -85,6 +91,8 @@ public class MainWindowController implements Initializable
     {
         this.BLLM = new BLLManager();
         this.MWModel = new MainWindowModel();
+        this.smeFilter = new ArrayList<>();
+        this.countryFilter = new ArrayList<>();
     }
 
     /**
@@ -280,25 +288,58 @@ public class MainWindowController implements Initializable
     private void fillAccordion(List<Company> companies)
     {
         accordion.getPanes().clear();
+
+        updateCompanyFilters();
+
         for (Company company : companies)
         {
-            TitledPane gridTitlePane = new TitledPane(company.getName(), new AnchorPane());
-            GridPane grid = new GridPane();
-            grid.setVgap(4);
-            grid.setPadding(new Insets(5, 5, 5, 5));
-            grid.add(new Label("Country:  "), 0, 0);
-            grid.add(new Label(company.getCountry()), 1, 0);
-            grid.add(new Label("Address:  "), 0, 1);
-            grid.add(new Label(company.getAddress()), 1, 1);
-            grid.add(new Label("Website:  "), 0, 2);
-            grid.add(new Label(company.getWebsite()), 1, 2);
-            grid.add(new Label("Supply Chain Categories:  "), 0, 3);
-            grid.add(new Label(company.getSupplyChainCategoriy()), 1, 3);
-            grid.add(new Label("Business Roles:  "), 0, 4);
-            grid.add(new Label(company.getBuisnessRole()), 1, 4);
+            boolean smeCriteria = true;
+            boolean countryCriteria = true;
+            if (smeFilter.size() > 0)
+            {
+                smeCriteria = false;
+                for (ICompanyFilter filter : smeFilter)
+                {
+                    if (filter.meetsCriteria(company))
+                    {
+                        smeCriteria = true;
+                        break;
+                    }
+                }
+            }
+            if (countryFilter.size() > 0)
+            {
+                countryCriteria = false;
+                for (ICompanyFilter filter : countryFilter)
+                {
+                    if (filter.meetsCriteria(company))
+                    {
+                        countryCriteria = true;
+                        break;
+                    }
+                }
+            }
 
-            gridTitlePane.setContent(grid);
-            accordion.getPanes().add(gridTitlePane);
+            if (smeCriteria && countryCriteria)
+            {
+                TitledPane gridTitlePane = new TitledPane(company.getName(), new AnchorPane());
+                GridPane grid = new GridPane();
+                grid.setVgap(4);
+                grid.setPadding(new Insets(5, 5, 5, 5));
+                grid.add(new Label("Country:  "), 0, 0);
+                grid.add(new Label(company.getCountry()), 1, 0);
+                grid.add(new Label("Address:  "), 0, 1);
+                grid.add(new Label(company.getAddress()), 1, 1);
+                grid.add(new Label("Website:  "), 0, 2);
+                grid.add(new Label(company.getWebsite()), 1, 2);
+                grid.add(new Label("Supply Chain Categories:  "), 0, 3);
+                grid.add(new Label(company.getSupplyChainCategoriy()), 1, 3);
+                grid.add(new Label("Business Roles:  "), 0, 4);
+                grid.add(new Label(company.getBuisnessRole()), 1, 4);
+
+                gridTitlePane.setContent(grid);
+                accordion.getPanes().add(gridTitlePane);
+            }
         }
     }
 
@@ -309,6 +350,37 @@ public class MainWindowController implements Initializable
             CheckBox chk = new CheckBox(country);
             countryChkLst.add(chk);
             hboxFilter.getChildren().add(chk);
+        }
+    }
+
+    private void updateCompanyFilters()
+    {
+        smeFilter.clear();
+        countryFilter.clear();
+        for (CheckBox checkBox : smeChkLst)
+        {
+            if (checkBox.isSelected())
+            {
+                if (checkBox == chkIsSME)
+                {
+                    smeFilter.add(new CompanySMEFilter(ISSME));
+                }
+                if (checkBox == chkIsNotSME)
+                {
+                    smeFilter.add(new CompanySMEFilter(ISNOTSME));
+                }
+                if (checkBox == chkUnknown)
+                {
+                    smeFilter.add(new CompanySMEFilter(UNKNOWN));
+                }
+            }
+        }
+        for (CheckBox checkBox : countryChkLst)
+        {
+            if (checkBox.isSelected())
+            {
+                countryFilter.add(new CompanyCountryFilter(checkBox.getText()));
+            }
         }
     }
 }
